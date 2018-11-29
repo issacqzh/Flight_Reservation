@@ -10,29 +10,28 @@ $(document).ready(function () {
         $("#register_div").append("User:<input type=\"text\" id=\"register_user\"><br>Password: <input type=\"password\" id=\"register_pass\"><br>");
         $("#register_div").append("<button id=\"register_btn\">Sign Up</button>");
         body.append("<span id=\"back\">Click here to return back</span>");
-
-//go back to login interface
     });
+//go back to login interface
+    
     $(document).on("click","#back",function(){
-        let body = $("body");
-        body.empty();
-        body.append("<h1>What the fuck</h1>");
-        body.append("<div id=\"login_div\"></div>");
-        $("#login_div").append("User:<input type=\"text\" id=\"login_user\"><br>Password: <input type=\"password\" id=\"login_pass\"><br>");
-        $("#login_div").append(" <button id=\"login_btn\">Login</button>");
-        body.append("<span id=\"register\">Click here to create a new account</span>");
+       build_login_interface();
     });
 
 //create a new account
     $(document).on("click","#register_btn",function(){
         let user = $('#register_user').val();
         let pass = $('#register_pass').val();
-        $.ajax(mainUrl + 'users?username='+user+'&password='+pass, {
+        $.ajax(mainUrl + 'users', {
             type: 'POST',
             xhrFields: {
                 withCredentials: true
             },
-       
+            data:{
+                user: {
+                username: user,
+                password: pass
+                }
+            },
             success: function () {
                     alert('registered successfully')
             },
@@ -52,8 +51,10 @@ $(document).ready(function () {
                 withCredentials: true
             },
             data: {
-                username: user,
-                password: pass
+                user: {
+                    username: user,
+                    password: pass
+                    }
             },
             success:function(){
                 build_main_interface();
@@ -64,6 +65,23 @@ $(document).ready(function () {
         });
     });
 
+//log off
+    $(document).on("click","#log_off",function(){
+        $.ajax(mainUrl+'sessions',{
+            type:"DELETE",
+            xhrFields: {
+                withCredentials: true
+            },
+            success:function(){
+                build_login_interface();
+            },
+            error:function(){
+                alert("action failed");
+            }
+        });
+    });
+
+
 //build_main_interface
     build_main_interface=function(){
         let body=$("body");
@@ -71,7 +89,21 @@ $(document).ready(function () {
         body.append("<h1>Book your next fantastic flight</h1>")
         search_div=("<div id=\"search_div\"></div>");
         body.append(search_div);
+
+        //log off button
+        body.append('<button id="log_off">Log Off</button>');
         
         
     }
+//build_login_interface
+build_login_interface=function(){
+    let body = $("body");
+    body.empty();
+    body.append("<h1>What the fuck</h1>");
+    body.append("<div id=\"login_div\"></div>");
+    $("#login_div").append("User:<input type=\"text\" id=\"login_user\"><br>Password: <input type=\"password\" id=\"login_pass\"><br>");
+    $("#login_div").append(" <button id=\"login_btn\">Login</button>");
+    body.append("<span id=\"register\">Click here to create a new account</span>");
+}
+
 });
