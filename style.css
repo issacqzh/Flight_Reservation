@@ -1,0 +1,70 @@
+body {
+    background-color: #B0C4DE;
+    text-align: center;
+}
+
+#login_div {
+    text-align: center;
+}
+
+button {
+    display: inline-block;
+    border-radius: 4px;
+    background-color: gray;
+    border: none;
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 10px;
+    padding: 5px;
+    width: 50px;
+    transition: all 0.5s;
+    cursor: pointer;
+    margin: 5px;
+}
+  
+button span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+}
+  
+button span:after {
+    content: '\00bb';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+}
+  
+button:hover span {
+    padding-right: 10px;
+}
+  
+button:hover span:after {
+    opacity: 1;
+    right: 0;
+}
+
+#register {
+    font-family:Helvetica, Arial, sans-serif;
+    font-size: 20px;
+    color: #404040;
+}
+  
+h1 {
+    font-family: "Times New Roman", Times, serif;
+    font-size: 50px;
+    color: #404040;
+}
+
+#login_user,  #login_pass{
+    font-family:Helvetica, Arial, sans-serif;
+    font-size: 20px;
+    color: #404040;
+}
+
+  #login_div {
+    padding: 50px;
+  }
