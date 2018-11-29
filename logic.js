@@ -34,6 +34,7 @@ $(document).ready(function () {
             },
             success: function () {
                     alert('registered successfully')
+                    build_login_interface();
             },
             error: function () {
                 alert('This username has been already taken');
