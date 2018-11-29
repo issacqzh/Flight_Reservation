@@ -103,7 +103,7 @@ $(document).ready(function () {
         let new_pass = $("#new_pass").val();
         console.log(new_pass);
         $.ajax(mainUrl + 'passwords', {
-            type: "POST",
+            type: "PUT",
             xhrFields: {
                 withCredentials: true
             },
@@ -145,7 +145,8 @@ $(document).ready(function () {
         body.append("<div id=\"login_div\"></div>");
         $("#login_div").append("User:<input type=\"text\" id=\"login_user\"><br>Password: <input type=\"password\" id=\"login_pass\"><br>");
         $("#login_div").append(" <button id=\"login_btn\">Login</button>");
-        body.append("<span id=\"register\">Click here to create a new account</span>");
+        body.append("<span id=\"register\">Click here to create a new account</span><br>");
+        body.append("<span id=\"change_pass\">Click here to change your password</span>");
     }
 
 });
