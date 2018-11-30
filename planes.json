@@ -1,17 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-        <script src="http://www.cs.unc.edu/~kmp/comp426fall18/jquery-3.3.1.js"></script>
-</head>
-
-<body>
-
-<div id="id01"></div>
-<script>
-var airlines = 
-
-
-  [
+[
   {
     "name": "Aerospatiale (Sud Aviation) Se.210 Caravelle",
     "code": "CRV",
@@ -882,44 +869,4 @@ var airlines =
     "code": "YK4",
     "meiyong": "YK40"
   }
-
-    
-    
-  ];;
-
-myFunction(airlines);
-// check(airlines);
-function check(arr){
-    console.log(arr.length);
-}
-
-function myFunction(arr) {
-    var out = "";
-    var i;
-    for(i = 0; i < arr.length; i++) {
-        $.ajax("http://comp426.cs.unc.edu:3001/planes",
-        {
-            type:"POST",
-            xhrFields:{
-                withCredentials:true
-            },
-            data:{
-                "plane": {
-                    name:arr[i].name
-                }
-            },
-            success: function(){
-                
-            },
-            error: function(){
-            }
-        })
-        //out += '<a href="' + arr[i].url + '">' + 
-        //arr[i].airlineName + '</a><br>';
-    }
-    document.getElementById("id01").innerHTML = out;
-}
-</script>
-
-</body>
-</html>
+]
