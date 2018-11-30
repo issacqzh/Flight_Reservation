@@ -33,7 +33,7 @@ $(document).ready(function () {
                 }
             },
             success: function () {
-                alert('registered successfully')
+                alert('registered successfully');
                 build_login_interface();
             },
             error: function () {
@@ -131,6 +131,12 @@ $(document).ready(function () {
         body.append("<h1>Book your next fantastic flight</h1>")
         search_div = ("<div id=\"search_div\"></div>");
         body.append(search_div);
+        search=$("#search_div");
+        search.append('<input type="text" autocomplete="off" id="source" placeholder="From City or Airport"><br>');
+        search.append('<input type="text" id="destination" placeholder="To City or Airport"><br>');
+        search.append('<input type="text" id="d_date"><br>');
+        search.append('<input type="text" id="a_date"><br>');
+        search.append('<button id="search_btn">Search</button>');
 
         //log off button
         body.append('<button id="log_off">Log Off</button>');
