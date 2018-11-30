@@ -135,7 +135,6 @@ $(document).ready(function () {
         search.append('<input type="text" autocomplete="off" id="source" placeholder="From City or Airport"><br>');
         search.append('<input type="text" id="destination" placeholder="To City or Airport"><br>');
         search.append('<input type="text" id="d_date"><br>');
-        search.append('<input type="text" id="a_date"><br>');
         search.append('<button id="search_btn">Search</button>');
 
         //log off button
