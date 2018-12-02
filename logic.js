@@ -196,7 +196,8 @@ $(document).ready(function () {
                                 for (i = 0; i < response.length; i++) {
                                     if (response[i].departure_id == source_id && response[i].arrival_id == destination_id) {
                                         flight_id = response[i].id;
-                                        console.log("sada");
+                                        // console.log(flight_id);
+                                        // console.log("sada");
                                         $.ajax(mainUrl + "instances", {
                                             data: "GET",
                                             xhrFields: {
@@ -204,13 +205,24 @@ $(document).ready(function () {
                                             },
                                             datatype: JSON,
                                             success: function (response) {
-                                                
-                                                for (i = 0; i < response.length; i++) {
-                                                    if (response[i].date == date && response[i].flight_id == flight_id) {
+                                                for (j = 0; j < response.length; j++) {
+                                                    // console.log(response[j].date);
+                                                    // console.log(date);
+                                                    console.log(response[j].flight_id);
+                                                    //console.log(flight_id);
+                                                    if (response[j].flight_id == flight_id) {
+                                                        console.log("hit");
+                                                        // console.log(response[j].date);
+                                                        // console.log(date);
+                                                        if (response[j].date == date) {
+
+                                                    //if (response[j].date == date && response[j].flight_id == flight_id) {
                                                         console.log("sdd mad");
-                                                        $("#result_div").append(response[i].id);
+                                                        $("#result_div").append(response[j].id);
                                                         $("#result_div").append("Sasdasdkjansdaksjda");
                                                     }
+                                                    }
+                                                    //console.log("hitagain");
                                                 }
                                             }
 
