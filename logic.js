@@ -1,7 +1,6 @@
 var mainUrl = "http://comp426.cs.unc.edu:3001/";
 $(document).ready(function () {
 
-
     //go to the register interface
     $(document).on("click", "#register", function () {
         let body = $("body");
@@ -71,7 +70,7 @@ $(document).ready(function () {
     });
 
     //log off
-    $(document).on("click", "#log_off", function () {
+    $(document).on("click", "#logoutBtn", function () {
         $.ajax(mainUrl + 'sessions', {
             type: "DELETE",
             xhrFields: {
@@ -97,7 +96,13 @@ $(document).ready(function () {
         $("#change_div").append("Old Password: <input type = \"password\" id=\"old_pass\"><br>");
         $("#change_div").append("New Password: <input type = \"password\" id=\"new_pass\"><br>");
         $("#change_div").append("<button id=\"change_btn\">Change Password</button>");
+        $("#change_div").append("<button id=\"change_back\">Go Back</button>")
     });
+
+    $(document).on("click","#change_back",function(){
+        build_login_interface();
+    });
+
 
     //change_password
     $(document).on('click', '#change_btn', function () {
@@ -148,7 +153,7 @@ $(document).ready(function () {
         body.append('<table id="result"></table>')
 
 
-        body.append('<button id="log_off">Log Off</button>')
+        body.append('<div id="logoutBtn" onclick="logout();">LOGOUT</div>')
 
 
     }
@@ -161,12 +166,18 @@ $(document).ready(function () {
         body.append("<div id=\"login_div\"></div>");
         $("#login_div").append("User:<input type=\"text\" id=\"login_user\"><br>Password: <input type=\"password\" id=\"login_pass\"><br>");
         $("#login_div").append(" <button id=\"login_btn\">Login</button>");
+
+        
+
+        loginbutton='<fb:login-button widthscope="public_profile,email" display="block" onlogin="checkLoginState();"></fb:login-button>';
+        body.append(loginbutton);
         body.append("<span id=\"register\">Click here to create a new account</span><br>");
         body.append("<span id=\"change_pass\">Click here to change your password</span>");
     }
 
     //search
     $(document).on("click", "#search_btn", function () {
+        $("#result").empty();
         let source = $("#source").val();
         let source_id = 0;
         let destination = $("#destination").val();
@@ -212,7 +223,7 @@ $(document).ready(function () {
                                         flight_id = response[i].id;
                                         flight_number=response[i].number;
                                         airline_id=response[i].airline_id;
-                                        console.log(airline_id);
+                                       
                                         departure_time=response[i].departs_at.substring(11,19);
                                         arrival_time=response[i].arrives_at.substring(11,19);
                                       
@@ -369,28 +380,49 @@ $(document).ready(function () {
                         //if info is null
                         if (response[i].plane_id == selected_plane_id) {
                             if (response[i].info == null) {
+<<<<<<< HEAD
                                 response[i].info = [];
                                 response[i].info.push(instanceid);
                                 console.log(response[i].id);
+=======
+                                console.log("null");
+                                infoarray = [];
+                                infoarray.push(instanceid);
+                                
+>>>>>>> 241c14a51c26ee26e17ca1a76115a15aad57fb68
                                 $.ajax(mainUrl + "seats/"+ response[i].id, {
                                     type: "PUT",
                                     xhrFields: {
                                         withCredentials: true
                                     },
                                     data: {
+<<<<<<< HEAD
                                         seat: {
                                         info: "hit"}
+=======
+                                        seat:{
+                                        info: JSON.stringify(infoarray)
+                                    },
+>>>>>>> 241c14a51c26ee26e17ca1a76115a15aad57fb68
                                     },
                                     async:false,
                                     success: function() {
+                                        console.log("sucessaaa");
                                        seatid=response[i].id;
+<<<<<<< HEAD
+=======
+                                       console.log(infoarray); 
+>>>>>>> 241c14a51c26ee26e17ca1a76115a15aad57fb68
                                     },
                                     error: function() {
                                         alert("post info failed");
                                     }
                                 });
                                 break;
+<<<<<<< HEAD
                                
+=======
+>>>>>>> 241c14a51c26ee26e17ca1a76115a15aad57fb68
                             }
                         //if info is not null
                                     //如果info空，则post， 如果不空，如果有，下一个大loop，如果没有，post
@@ -405,25 +437,37 @@ $(document).ready(function () {
                                 if(contain==1){
                                    continue;
                                 }else{
+<<<<<<< HEAD
                                     response[i].info.push(instanceid);
+=======
+                                    infoarray=response[i].info;
+                                    infoarray.push(instanceid);
+                                    
+>>>>>>> 241c14a51c26ee26e17ca1a76115a15aad57fb68
                                     $.ajax(mainUrl + "seats/"+ response[i].id, {
                                         type: "PUT",
                                         xhrFields: {
                                             withCredentials: true
                                         },
                                         data: {
+<<<<<<< HEAD
                                             seat: {
                                                 info: response[i].info}
+=======
+                                            seat:{
+                                                info: JSON.stringify(infoarray)}
+>>>>>>> 241c14a51c26ee26e17ca1a76115a15aad57fb68
                                         },
                                         async:false,
                                         success: function() {
                                             seatid=response[i].id;
-                                            break;
+                                           
                                         },
                                         error: function() {
-                                            alert("post info failed");
+                                            alert("post exist info failed");
                                         }
                                     });
+                                    break;
                                 }
                             }
                         }
@@ -456,7 +500,7 @@ $(document).ready(function () {
                     let lastName=$("#lastname").val();
                     let age=$("#age").val();
                     let gender=$("#gender").val();
-                    $("body").empty;
+                    $("body").empty();
                     $("body").append("<h1>Your ticket</h1>");
                     $("body").append("<table id='ticket_result'></table>")
                     $("#ticket_result").append($("<tr id='mingzi'></tr>"));

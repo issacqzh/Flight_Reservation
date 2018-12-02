@@ -3,14 +3,56 @@
 
 <head>
 
-<title>A4 API Example</title>
-<script src="http://www.cs.unc.edu/~kmp/comp426fall18/jquery-3.3.1.js"></script>
-<script src="logic.js"></script>
-<!-- <script src="autocomplete.js"></script> -->
-<link rel="stylesheet" type="text/css" href="style.css">
+  <title>A4 API Example</title>
+  <script type="text/javascript" src="http://ajax.cdnjs.com/ajax/libs/json2/20110223/json2.js"></script>
+  <script src="http://www.cs.unc.edu/~kmp/comp426fall18/jquery-3.3.1.js"></script>
+  <script src="logic.js"></script>
+  <script>
+//facebook API
+window.fbAsyncInit = function() {
+        FB.init({
+          appId      : '1452677964876209',
+          cookie     : true,
+          xfbml      : true,
+          version    : 'v2.8'
+        });
+          
+      };
+    
+      (function(d, s, id){
+         var js, fjs = d.getElementsByTagName(s)[0];
+         if (d.getElementById(id)) {return;}
+         js = d.createElement(s); js.id = id;
+         js.src = "https://connect.facebook.net/en_US/sdk.js";
+         fjs.parentNode.insertBefore(js, fjs);
+       }(document, 'script', 'facebook-jssdk'));
+    
+       function checkLoginState() {
+      FB.getLoginStatus(function(response) {
+        statusChangeCallback(response);
+      });
+    }
+    function statusChangeCallback(response){
+      FB.api('/me', function(response) {
+          console.log('Successful login for: ' + response.name);
+          build_main_interface();
+        });
+    }
+    
+    function logout(response){
+        FB.logout(function(response){
+          
+        });
+          
+    }
+</script>
+
+  <!-- <script src="autocomplete.js"></script> -->
+  <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 
 <body>
+<<<<<<< HEAD
   <h1>Flight Registration</h1>
 
 <div id="login_div">
@@ -22,6 +64,27 @@
 <br>
 <span id="change_pass">Click here to change your password</span>
 <div id="mesg_div"></div>
+=======
+  <h1>What the fuck</h1>
+
+  <div id="login_div">
+    User: <input type="text" value="issacqi" id="login_user"><br>
+    Password: <input type="password" value="111111" id="login_pass"><br>
+    <button id="login_btn">Login</button>
+  </div>
+
+  <div id="loginBtn">
+    <fb:login-button scope="public_profile,email" display="block" onlogin="checkLoginState();">
+    </fb:login-button>
+  </div>
+
+
+
+  <span id="register">Click here to create a new account</span>
+  <br>
+  <span id="change_pass">Click here to change your password</span>
+  <div id="mesg_div"></div>
+>>>>>>> 241c14a51c26ee26e17ca1a76115a15aad57fb68
 
 </body>
 
