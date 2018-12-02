@@ -1,6 +1,7 @@
 var mainUrl = "http://comp426.cs.unc.edu:3001/";
 $(document).ready(function () {
 
+
     //go to the register interface
     $(document).on("click", "#register", function () {
         let body = $("body");
@@ -32,6 +33,7 @@ $(document).ready(function () {
                     password: pass
                 }
             },
+          
             async:false,
             success: function () {
                 alert('registered successfully');
@@ -58,7 +60,7 @@ $(document).ready(function () {
                     password: pass
                 }
             },
-          
+            async:false,
             success: function () {
                 build_main_interface();
             },
@@ -127,7 +129,6 @@ $(document).ready(function () {
         })
     });
 
-
     //build_main_interface
     build_main_interface = function () {
         let body = $("body");
@@ -141,13 +142,17 @@ $(document).ready(function () {
         search.append('<input type="text" value=\"2019-01-22\" id="d_date"><br>');
         search.append('<button id="search_btn">Search</button>');
 
+        body.append('<button id = "tickets_btn">My Ticket</button>');
+
         body.append('<div id="result_div"></div>');
+        body.append('<table id="result"></table>')
 
 
-        body.append('<button id="log_off">Log Off</button>');
+        body.append('<button id="log_off">Log Off</button>')
 
 
     }
+
     //build_login_interface
     build_login_interface = function () {
         let body = $("body");
@@ -159,6 +164,7 @@ $(document).ready(function () {
         body.append("<span id=\"register\">Click here to create a new account</span><br>");
         body.append("<span id=\"change_pass\">Click here to change your password</span>");
     }
+
     //search
     $(document).on("click", "#search_btn", function () {
         let source = $("#source").val();
@@ -174,9 +180,9 @@ $(document).ready(function () {
             datatype: JSON,
             async:false,
             success: function (response) {
-                for (i = 0; i < response.length; i++) {
-                    if (response[i].city == source) {
-                        source_id = response[i].id;
+                for (m = 0; m < response.length; m++) {
+                    if (response[m].city == source) {
+                        source_id = response[m].id;
                     }
                 }
                 $.ajax(mainUrl + "airports", {
@@ -187,9 +193,9 @@ $(document).ready(function () {
                     datatype: JSON,
                     async:false,
                     success: function (response) {
-                        for (i = 0; i < response.length; i++) {
-                            if (response[i].city == destination) {
-                                destination_id = response[i].id;
+                        for (k = 0; k < response.length; k++) {
+                            if (response[k].city == destination) {
+                                destination_id = response[k].id;
                             }
                         }
                         $.ajax(mainUrl + "flights", {
@@ -204,8 +210,12 @@ $(document).ready(function () {
                                     if (response[i].departure_id == source_id && response[i].arrival_id == destination_id) {
                                        
                                         flight_id = response[i].id;
-                                        console.log(flight_id);
-                                        console.log("sada");
+                                        flight_number=response[i].number;
+                                        airline_id=response[i].airline_id;
+                                        console.log(airline_id);
+                                        departure_time=response[i].departs_at.substring(11,19);
+                                        arrival_time=response[i].arrives_at.substring(11,19);
+                                      
                                         $.ajax(mainUrl + "instances", {
                                             data: "GET",
                                             xhrFields: {
@@ -214,14 +224,37 @@ $(document).ready(function () {
                                             datatype: JSON,
                                             async:false,
                                             success: function (response) {
-                                                console.log(response);  
-                                                for (i = 0; i < response.length; i++) {
-                                                   
-        
-                                                    if (response[i].date == date && response[i].flight_id == flight_id) {
-                                                       
+                                            
+                                                for (j = 0; j < response.length; j++) {
+                                           
+                                                    if (response[j].date == date && response[j].flight_id == flight_id) {
+                                               
+                                                        row=$("<tr></tr>");
+                                                       $("#result").append(row);
+                                                       row.append("<td>"+departure_time+"<td>");
+                                                       row.append("<td>"+arrival_time+"</td>");
+                                                       airline_name="";
+                                                       $.ajax(mainUrl + "airlines", {
+                                                        data: "GET",
+                                                        xhrFields: {
+                                                            withCredentials: true
+                                                        },
+                                                        async:false,
+                                                        datatype: JSON,
+                                                        success: function (response) {
+                                                            for(z=0;z<response.length;z++){
+                                                                if(response[z].id==airline_id){
+                                                                    airline_name=response[z].name;
+                                                                }
+                                                            }
+                                                        }
+                                                    });
+                                                        row.append("<td>"+airline_name+"</td>");
+                                                        row.append("<td>"+flight_number+"</td>");
+                                                        row.append("<td>"+source+" arrow "+destination+"</td>");
+                                                        row.append('<button id = "select_btn" data-airline-name = "' + airline_name + '" data-flight-number = "' + flight_number + '" data-source = "' + source + '" data-destination = "' + destination + '" data-departure-time = "' + departure_time + '" data-arrival-time = "' + arrival_time + '" data-instance-id ="' +response[j].id+ '" data-flight-id ="' +flight_id+ '" data-date="' + date +'">Select</button>');
                                                     }
-                                                    }
+                                                    
                                                     //console.log("hitagain");
                                                 }
                                             }
@@ -235,7 +268,7 @@ $(document).ready(function () {
                             }
                         });
                     }
-                })
+                });
 
 
             }
@@ -249,4 +282,278 @@ $(document).ready(function () {
 
     });
 
+    //confirmaion page
+    $(document).on("click", "#select_btn", function () {
+        let sourceid=$(this).attr("data-source");
+        let destinationid=$(this).attr("data-destination");
+        let instanceid =$(this).attr("data-instance-id");
+        let flightid=$(this).attr("data-flight-id");
+        let dateid = $(this).attr("data-date");
+        let departuretimeid = $(this).attr("data-departure-time");
+        let arrivaltimeid = $(this).attr("data-arrival-time");
+        let airlinenameid = $(this).attr("data-airline-name");
+        let flightnumberid = $(this).attr("data-flight-number");
+        $("body").empty();
+        $("body").append("<h1>Please enter your information</h1>");
+        var info_div = $("<div></div>");
+        $("body").append(info_div);
+        info_div.append('Lastname: <input type ="text" id="lastname"></input><br>');
+        info_div.append('Firstname: <input type ="text" id="firstname"></input><br>');
+        info_div.append('Age: <input type ="text" id="age"></input><br>');
+        info_div.append('Gender: <input type ="text" id="gender"></input><br>');
+        info_div.append('Email: <input type ="text" id="email"></input><br>');
+        info_div.append('<button data-date = "' + dateid + '" data-source = "' + sourceid + '" data-destination = "' + destinationid + '" data-airline-name = "' + airlinenameid + '" data-flight-number = "' + flightnumberid + '" data-departure-time = "' + departuretimeid + '" data-arrival-time = "' + arrivaltimeid + '" data-instance-id = "'+instanceid+ '" data-flight-id ="' +flightid+ '" id = "confirm_btn">Confirm</button>');
+    });
+
+    //ticket interface
+    $(document).on("click", "#confirm_btn", function() {
+        let sourceid=$(this).attr("data-source");
+        let destinationid=$(this).attr("data-destination");
+        let airlinenameid = $(this).attr("data-airline-name");
+        let flightnumberid = $(this).attr("data-flight-number");
+        let instanceid =$(this).attr("data-instance-id");
+        let flightid=$(this).attr("data-flight-id");
+        let dateid = $(this).attr("data-date");
+        let departuretimeid = $(this).attr("data-departure-time");
+        let arrivaltimeid = $(this).attr("data-arrival-time");
+        let emailid=$("#email").val();
+        let seatid=0;
+        var conf_code = Math.floor(Math.random() * 10000).pad(4);
+            $.ajax(mainUrl + 'itineraries', {
+                type: 'POST',
+                xhrFields: {
+                    withCredentials: true
+                },
+                data: {
+                    itinerary: {
+                        confirmation_code: conf_code,
+                        email: emailid
+                    }
+                },
+                async:false,
+                success: function () {
+                    console.log("success");
+                },
+                error: function () {
+                    alert('itineraries post fail');
+                }
+            });
+
+            var selected_plane_id=0;
+            $.ajax(mainUrl + "flights/" + flightid, {
+                type: "GET",
+                xhrFields: {
+                    withCredentials: true
+                },
+                datatype: JSON,
+                async:false,
+                success: function (response) {
+                    selected_plane_id = response.plane_id;
+                },
+                error: function() {
+                    alert("get plane id failed");
+                }
+
+            });
+
+            $.ajax(mainUrl + "seats", {
+                type: "GET",
+                xhrFields: {
+                    withCredentials: true
+                },
+                datatype: JSON,
+                async:false,
+                success: function (response) {
+                    console.log("jinlai");
+                    for (i = 0; i < response.length; i++) {
+                        //if info is null
+                        if (response[i].plane_id == selected_plane_id) {
+                            if (response[i].info == null) {
+                                response[i].info = [];
+                                response[i].info.push(instanceid);
+                                console.log(response[i].id);
+                                $.ajax(mainUrl + "seats/"+ response[i].id, {
+                                    type: "PUT",
+                                    xhrFields: {
+                                        withCredentials: true
+                                    },
+                                    data: {
+                                        seat: {
+                                        info: "hit"}
+                                    },
+                                    async:false,
+                                    success: function() {
+                                       seatid=response[i].id;
+                                    },
+                                    error: function() {
+                                        alert("post info failed");
+                                    }
+                                });
+                                break;
+                               
+                            }
+                        //if info is not null
+                                    //如果info空，则post， 如果不空，如果有，下一个大loop，如果没有，post
+                            else {
+                                contain=0;
+                                for (j = 0; j < response[i].info.length; j++) {
+                                    if (response[i].info[j] ==instanceid ){
+                                            contain=1;
+                                            break;
+                                    }
+                                }
+                                if(contain==1){
+                                   continue;
+                                }else{
+                                    response[i].info.push(instanceid);
+                                    $.ajax(mainUrl + "seats/"+ response[i].id, {
+                                        type: "PUT",
+                                        xhrFields: {
+                                            withCredentials: true
+                                        },
+                                        data: {
+                                            seat: {
+                                                info: response[i].info}
+                                        },
+                                        async:false,
+                                        success: function() {
+                                            seatid=response[i].id;
+                                            break;
+                                        },
+                                        error: function() {
+                                            alert("post info failed");
+                                        }
+                                    });
+                                }
+                            }
+                        }
+                    }
+                },
+                error: function() {
+                    alert("get seats failed");
+                }
+            });
+
+
+            $.ajax(mainUrl + "tickets", {
+                type: 'POST',
+                xhrFields: {
+                    withCredentials: true
+                },
+                data: {
+                    ticket: {
+                        first_name: $("#firstname").val(),
+                        last_name: $("#lastname").val(),
+                        age: $("#age").val(),
+                        gender: $("#gender").val(),
+                        instance_id: instanceid,
+                        seat_id:seatid
+                      }
+                },
+                async:false,
+                success: function () {
+                    let firstName=$("#firstname").val();
+                    let lastName=$("#lastname").val();
+                    let age=$("#age").val();
+                    let gender=$("#gender").val();
+                    $("body").empty;
+                    $("body").append("<h1>Your ticket</h1>");
+                    $("body").append("<table id='ticket_result'></table>")
+                    $("#ticket_result").append($("<tr id='mingzi'></tr>"));
+                    $("#mingzi").append("<td>Name: </td>");
+                    $("#mingzi").append("<td>"+firstName+" "+lastName+"</td>");
+
+                    $("#ticket_result").append($("<tr id='nianling'></tr>"));
+                    $("#nianling").append("<td>Age: </td>");
+                    $("#nianling").append("<td>"+age+"</td>");
+
+                    $("#ticket_result").append($("<tr id='xingbie'></tr>"));
+                    $("#xingbie").append("<td>Gender: </td>");
+                    $("#xingbie").append("<td>"+gender+"</td>");
+
+                    $("#ticket_result").append($("<tr id='youxiang'></tr>"));
+                    $("#youxiang").append("<td>Email: </td>");
+                    $("#youxiang").append("<td>"+emailid+"</td>");
+
+                    $("#ticket_result").append($("<tr id='queren'></tr>"));
+                    $("#queren").append("<td>Confirmation Code: </td>");
+                    $("#queren").append("<td>"+conf_code+"</td>");
+
+                    var seat_row;
+                    var seat_number;
+                    $.ajax(mainUrl + "seats", {
+                        type: "GET",
+                        xhrFields: {
+                            withCredentials: true
+                        },
+                        async:false,
+                        success: function(response) {
+                            for (q = 0; q < response.length; q++) {
+                                if (response[q].id == seatid) {
+                                    seat_row = response[q].row;
+                                    seat_number = response[q].number;
+                                }
+                            }
+                        },
+                        error: function() {
+                            alert("get seats failed");
+                        }
+                    });
+
+                    $("#ticket_result").append($("<tr id='zuowei'></tr>"));
+                    $("#zuowei").append("<td>Seat: </td>");
+                    $("#zuowei").append("<td>"+seat_row + seat_number+ "</td>");
+
+                    $("#ticket_result").append($("<tr id='riqi'></tr>"));
+                    $("#riqi").append("<td>Date: </td>");
+                    $("#riqi").append("<td>"+dateid+ "</td>");
+
+                    $("#ticket_result").append($("<tr id='chufashijian'></tr>"));
+                    $("#chufashijian").append("<td>Departure Time: </td>");
+                    $("#chufashijian").append("<td>"+departuretimeid+ "</td>");
+
+                    $("#ticket_result").append($("<tr id='daodashijian'></tr>"));
+                    $("#daodashijian").append("<td>Arrival Time: </td>");
+                    $("#daodashijian").append("<td>"+arrivaltimeid+ "</td>");
+
+                    $("#ticket_result").append($("<tr id='chufadi'></tr>"));
+                    $("#chufadi").append("<td>Depart: </td>");
+                    $("#chufadi").append("<td>"+sourceid+ "</td>");
+
+                    $("#ticket_result").append($("<tr id='mudidi'></tr>"));
+                    $("#mudidi").append("<td>Arrive: </td>");
+                    $("#mudidi").append("<td>"+destinationid+ "</td>");
+
+                    $("#ticket_result").append($("<tr id='hangbanhao'></tr>"));
+                    $("#hangbanhao").append("<td>Flight Number: </td>");
+                    $("#hangbanhao").append("<td>"+flightnumberid+ "</td>");
+
+                    $("#ticket_result").append($("<tr id='hangkong'></tr>"));
+                    $("#hangkong").append("<td>Airline: </td>");
+                    $("#hangkong").append("<td>"+airlinenameid+ "</td>");
+                    
+                },
+                error: function () {
+                    alert('ticket post fail');
+                }                
+            });
+
+        });
+
+
+  
+
+    $(document).on("click", "#tickets_btn", function () {
+        
+
+
+    });
+
 });
+
+
+Number.prototype.pad = function(size) {
+    var s = String(this);
+    while (s.length < (size || 2)) {s = "0" + s;}
+    return s;
+}
