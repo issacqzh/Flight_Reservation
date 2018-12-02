@@ -32,45 +32,43 @@ var flights =
 
     
 ;;
-
-myFunction(flights);
+num=["A","B","C","D","E","F"];
+myFunction();
 // check(airlines);
 function check(arr){
     console.log(arr.length);
 }
 
-function myFunction(arr) {
-    var out = "";
-    var i;
-    for(i = 0; i < arr.length; i++) {
-        $.ajax("http://comp426.cs.unc.edu:3001/flights",
+function myFunction() {
+for(k=2256;k<2269;k++){
+    for(i = 1; i < 31; i++) {
+        for(j=0;j<6;j++){
+
+        
+        $.ajax("http://comp426.cs.unc.edu:3001/seats",
         {
             type:"POST",
             xhrFields:{
                 withCredentials:true
             },
             data:{
-                "flight": {
-                  departs_at: arr[i].departs_at,
-                  arrives_at: arr[i].arrives_at,
-                  number: arr[i].number,
-                  departure_id: arr[i].departure_id,
-                  arrival_id: arr[i].arrival_id,
-                  airline_id: arr[i].airline_id,
-                  plane_id: arr[i].plane_id
-                }
+                "seat": {
+                    plane_id:k,
+                    row: i,
+                    number: num[j]
+  }
             },
             success: function(){
                 
             },
             error: function(){
             }
-        })
+        });
         //out += '<a href="' + arr[i].url + '">' + 
         //arr[i].airlineName + '</a><br>';
-    }
-    document.getElementById("id01").innerHTML = out;
-}
+    }}}};
+    
+
 </script>
 
 </body>

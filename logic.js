@@ -32,6 +32,7 @@ $(document).ready(function () {
                     password: pass
                 }
             },
+            async:false,
             success: function () {
                 alert('registered successfully');
                 build_login_interface();
@@ -57,6 +58,7 @@ $(document).ready(function () {
                     password: pass
                 }
             },
+          
             success: function () {
                 build_main_interface();
             },
@@ -73,6 +75,7 @@ $(document).ready(function () {
             xhrFields: {
                 withCredentials: true
             },
+            async:false,
             success: function () {
                 build_login_interface();
             },
@@ -114,6 +117,7 @@ $(document).ready(function () {
                     new_password: new_pass
                 }
             },
+            async:false,
             success: function () {
                 alert("change successfully");
             },
@@ -132,9 +136,9 @@ $(document).ready(function () {
         search_div = ("<div id=\"search_div\"></div>");
         body.append(search_div);
         search = $("#search_div");
-        search.append('<input type="text" id="source" placeholder="From City or Airport"><br>');
-        search.append('<input type="text" id="destination" placeholder="To City or Airport"><br>');
-        search.append('<input type="text" id="d_date"><br>');
+        search.append('<input type="text" id="source" value=\"Seattle\" placeholder="From City or Airport"><br>');
+        search.append('<input type="text" id="destination" value=\"New York\" placeholder="To City or Airport"><br>');
+        search.append('<input type="text" value=\"2019-01-22\" id="d_date"><br>');
         search.append('<button id="search_btn">Search</button>');
 
         body.append('<div id="result_div"></div>');
@@ -168,6 +172,7 @@ $(document).ready(function () {
                 withCredentials: true
             },
             datatype: JSON,
+            async:false,
             success: function (response) {
                 for (i = 0; i < response.length; i++) {
                     if (response[i].city == source) {
@@ -180,6 +185,7 @@ $(document).ready(function () {
                         withCredentials: true
                     },
                     datatype: JSON,
+                    async:false,
                     success: function (response) {
                         for (i = 0; i < response.length; i++) {
                             if (response[i].city == destination) {
@@ -192,34 +198,28 @@ $(document).ready(function () {
                                 withCredentials: true
                             },
                             datatype: JSON,
+                            async:false,
                             success: function (response) {
                                 for (i = 0; i < response.length; i++) {
                                     if (response[i].departure_id == source_id && response[i].arrival_id == destination_id) {
+                                       
                                         flight_id = response[i].id;
-                                        // console.log(flight_id);
-                                        // console.log("sada");
+                                        console.log(flight_id);
+                                        console.log("sada");
                                         $.ajax(mainUrl + "instances", {
                                             data: "GET",
                                             xhrFields: {
                                                 withCredentials: true
                                             },
                                             datatype: JSON,
+                                            async:false,
                                             success: function (response) {
-                                                for (j = 0; j < response.length; j++) {
-                                                    // console.log(response[j].date);
-                                                    // console.log(date);
-                                                    console.log(response[j].flight_id);
-                                                    //console.log(flight_id);
-                                                    if (response[j].flight_id == flight_id) {
-                                                        console.log("hit");
-                                                        // console.log(response[j].date);
-                                                        // console.log(date);
-                                                        if (response[j].date == date) {
-
-                                                    //if (response[j].date == date && response[j].flight_id == flight_id) {
-                                                        console.log("sdd mad");
-                                                        $("#result_div").append(response[j].id);
-                                                        $("#result_div").append("Sasdasdkjansdaksjda");
+                                                console.log(response);  
+                                                for (i = 0; i < response.length; i++) {
+                                                   
+        
+                                                    if (response[i].date == date && response[i].flight_id == flight_id) {
+                                                       
                                                     }
                                                     }
                                                     //console.log("hitagain");
