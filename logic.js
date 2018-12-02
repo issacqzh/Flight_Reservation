@@ -131,15 +131,15 @@ $(document).ready(function () {
         body.append("<h1>Book your next fantastic flight</h1>")
         search_div = ("<div id=\"search_div\"></div>");
         body.append(search_div);
-        search=$("#search_div");
+        search = $("#search_div");
         search.append('<input type="text" id="source" placeholder="From City or Airport"><br>');
         search.append('<input type="text" id="destination" placeholder="To City or Airport"><br>');
         search.append('<input type="text" id="d_date"><br>');
         search.append('<button id="search_btn">Search</button>');
-        
+
         body.append('<div id="result_div"></div>');
 
-        
+
         body.append('<button id="log_off">Log Off</button>');
 
 
@@ -156,84 +156,85 @@ $(document).ready(function () {
         body.append("<span id=\"change_pass\">Click here to change your password</span>");
     }
     //search
-    $(document).on("click","#search_btn",function(){
-        let source=$("#source").val();
-        let source_id=0;
-        $.ajax(mainUrl+"airports",{
-            data:"GET",
-            xhrFields:{
+    $(document).on("click", "#search_btn", function () {
+        let source = $("#source").val();
+        let source_id = 0;
+        let destination = $("#destination").val();
+        let destination_id = 0;
+        let date = $("#d_date").val();
+        $.ajax(mainUrl + "airports", {
+            data: "GET",
+            xhrFields: {
                 withCredentials: true
             },
-            datatype:JSON,
-            success:function(response){
-                for(i=0;i<response.length;i++){
-                    if(response[i].city==source){
-                        console.log("jinlai");
-                        source_id=response[i].id;
+            datatype: JSON,
+            success: function (response) {
+                for (i = 0; i < response.length; i++) {
+                    if (response[i].city == source) {
+                        source_id = response[i].id;
                     }
                 }
-            }
-        });
-        let destination=$("#destination").val();
-        let destination_id=0;
-        $.ajax(mainUrl+"airports",{
-            data:"GET",
-            xhrFields:{
-                withCredentials: true
-            },
-            datatype:JSON,
-            success:function(response){
-                for(i=0;i<response.length;i++){
-                    if(response[i].city==destination){
-                        destination_id=response[i].id;
-                    }
-                }
-            }
-        })
-       
-        let date=$("#d_date").val();
-        
-        $.ajax(mainUrl+"flights",{
-            data:"GET",
-            xhrFields:{
-                withCredentials: true
-            },
-            datatype:JSON,
-            success:function(response){
-                console.log(response);
-                for(i=0;i<response.length;i++){
-                    console.log(response[i].departure_id);
-                    console.log(source_id);
-                    console.log(response[i].arrival_id);
-                    console.log(destination_id);
-                    if(response[i].departure_id==source_id&&response[i].arrival_id==destination_id){
-                        flight_id=response[i].id;
-                        console.log("sada");
-                        $.ajax(mainUrl+"instances",{
-                            data:"GET",
-                            xhrFields:{
+                $.ajax(mainUrl + "airports", {
+                    data: "GET",
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    datatype: JSON,
+                    success: function (response) {
+                        for (i = 0; i < response.length; i++) {
+                            if (response[i].city == destination) {
+                                destination_id = response[i].id;
+                            }
+                        }
+                        $.ajax(mainUrl + "flights", {
+                            data: "GET",
+                            xhrFields: {
                                 withCredentials: true
                             },
-                            datatype:JSON,
-                            success:function(response){
-                                for(i=0;i<response.length;i++){
-                                    if(response[i].date==date&&response[i].flight_id==flight_id){
-                                        
-                                        $("#result_div").append(response[i].id);
-                                        $("#result_div").append("Sasdasdkjansdaksjda");
+                            datatype: JSON,
+                            success: function (response) {
+                                for (i = 0; i < response.length; i++) {
+                                    if (response[i].departure_id == source_id && response[i].arrival_id == destination_id) {
+                                        flight_id = response[i].id;
+                                        console.log("sada");
+                                        $.ajax(mainUrl + "instances", {
+                                            data: "GET",
+                                            xhrFields: {
+                                                withCredentials: true
+                                            },
+                                            datatype: JSON,
+                                            success: function (response) {
+                                                
+                                                for (i = 0; i < response.length; i++) {
+                                                    if (response[i].date == date && response[i].flight_id == flight_id) {
+                                                        console.log("sdd mad");
+                                                        $("#result_div").append(response[i].id);
+                                                        $("#result_div").append("Sasdasdkjansdaksjda");
+                                                    }
+                                                }
+                                            }
+
+                                        });
                                     }
                                 }
+                            },
+                            error: function () {
+                                alert("error");
                             }
-                          
                         });
                     }
-                }
-            },
-            error:function(){
-                alert("error");
+                })
+
+
             }
         });
-       
+
+
+
+
+
+
+
     });
 
 });
