@@ -41,7 +41,8 @@ window.fbAsyncInit = function() {
     
     function logout(response){
         FB.logout(function(response){
-          
+          build_login_interface();
+        
         });
           
     }
@@ -52,6 +53,7 @@ window.fbAsyncInit = function() {
 </head>
 
 <body>
+  <div id="body">
   <h1>What the fuck</h1>
 
   <div id="login_div">
@@ -60,17 +62,20 @@ window.fbAsyncInit = function() {
     <button id="login_btn">Login</button>
   </div>
 
-  <div id="loginBtn">
-    <fb:login-button scope="public_profile,email" display="block" onlogin="checkLoginState();">
-    </fb:login-button>
-  </div>
-
 
 
   <span id="register">Click here to create a new account</span>
   <br>
   <span id="change_pass">Click here to change your password</span>
   <div id="mesg_div"></div>
+</div>
+
+
+  <div id="loginBtn">
+    <fb:login-button scope="public_profile,email" display="block" onlogin="checkLoginState();">
+    </fb:login-button>
+  </div>
+
 
 </body>
 
