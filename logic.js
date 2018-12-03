@@ -402,7 +402,7 @@ $(document).ready(function () {
                     for (i = 0; i < response.length; i++) {
                         //if info is null
                         if (response[i].plane_id == selected_plane_id) {
-                            if (response[i].info == null) {
+                            if (response[i].info == "") {
                                 console.log("null");
                                 infoarray = [];
                                 infoarray.push(instanceid);

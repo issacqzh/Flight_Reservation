@@ -15,6 +15,7 @@ src="http://www.cs.unc.edu/~kmp/comp426fall18/jquery-3.3.1.js"></script>
     
 </body>
 <script>
+    
     var mainUrl = "http://comp426.cs.unc.edu:3001/";
     $.ajax(mainUrl+"seats",{
         type: 'GET',
@@ -29,7 +30,7 @@ src="http://www.cs.unc.edu/~kmp/comp426fall18/jquery-3.3.1.js"></script>
                             withCredentials:true
                         },
                         data: {
-                            seat: {info:"" }
+                            seat: {info:""}
                                                 },
                     success: function(){
                         console.log("successs");
