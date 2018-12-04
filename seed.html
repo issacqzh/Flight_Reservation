@@ -8,65 +8,39 @@
 
 <div id="id01"></div>
 <script>
-var flights = 
-[
-  {
-  "departs_at": "12:00",
-  "arrives_at": "14:00",
-  "number": "AA2667",
-  "plane_id": 2686,
-  "departure_id": 84907,
-  "arrival_id": 77893,
-  "airline_id": 30782
-  },
-  {
-  "departs_at": "10:00",
-  "arrives_at": "11:00",
-  "number": "UA583",
-  "plane_id": 2084,
-  "departure_id": 84767,
-  "arrival_id": 84859,
-  "airline_id": 35954
-  }
-]
 
-    
-;;
-num=["A","B","C","D","E","F"];
+
 myFunction();
-// check(airlines);
-function check(arr){
-    console.log(arr.length);
-}
+
 
 function myFunction() {
-for(k=2256;k<2269;k++){
-    for(i = 1; i < 31; i++) {
-        for(j=0;j<6;j++){
 
-        
-        $.ajax("http://comp426.cs.unc.edu:3001/seats",
-        {
-            type:"POST",
-            xhrFields:{
-                withCredentials:true
-            },
-            data:{
-                "seat": {
-                    plane_id:k,
-                    row: i,
-                    number: num[j]
-  }
-            },
-            success: function(){
-                
-            },
-            error: function(){
-            }
-        });
-        //out += '<a href="' + arr[i].url + '">' + 
-        //arr[i].airlineName + '</a><br>';
-    }}}};
+$.ajax("http://comp426.cs.unc.edu:3001/seats", {
+    type: "GET",
+    xhrFields:{
+        withCredentials:true
+    },
+    dataType: JSON,
+    success: function(response){
+        for (i = 0; i < response.length; i++) {
+            $.ajax("http://comp426.cs.unc.edu:3001/seats/" + response[i].id,{
+                type: "PUT",
+                xhrFields:{
+                    withCredentials:true
+                },
+                data: {
+                    seat: {
+                        info:null
+                    }
+                },
+                success: function(){
+                    console.log("success");
+                }
+            });
+        }
+    }
+});
+}
     
 
 </script>

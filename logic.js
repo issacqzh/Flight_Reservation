@@ -142,8 +142,36 @@ $(document).ready(function () {
         search_div = ("<div id=\"search_div\"></div>");
         body.append(search_div);
         search = $("#search_div");
-        search.append('<input type="text" id="source" value=\"Seattle\" placeholder="From City or Airport"><br>');
-        search.append('<input type="text" id="destination" value=\"New York\" placeholder="To City or Airport"><br>');
+        //search.append('<input type="text" id="source" value=\"Seattle\" placeholder="From City or Airport"><br>');
+        //search.append('<input type="text" id="destination" value=\"New York\" placeholder="To City or Airport"><br>');
+
+        //autocomplete
+        let sourceInput = $('<input type="text" list = "dlAutoComplete" id="source" placeholder="From City or Airport"><br>');
+        let destinationInput = $('<input type="text" list = "dlAutoComplete" id="destination" placeholder="To City or Airport"><br>');
+        search.append(sourceInput);
+        search.append(destinationInput);
+
+        //city name datalist for autocomplete
+        let cityDataList = $('<datalist id = "dlAutoComplete"></datalist>');
+        search.append(cityDataList);
+        $.ajax(mainUrl + "airports", {
+            type: "GET",
+            xhrFields: {
+                withCredentials: true
+            },
+            datatype: JSON,
+            async:false,
+            success: function (response) {
+                for (i = 0; i < response.length; i++) {
+                    cityDataList.append('<option value = "'+response[i].city+'"></option>>');
+                }
+            },
+            error: function () {
+                alert("get all airports failed")
+            }
+
+        });
+
         search.append('<input type="text" value=\"2019-01-22\" id="d_date"><br>');
         search.append('<button id="search_btn">Search</button>');
 
@@ -380,49 +408,31 @@ $(document).ready(function () {
                         //if info is null
                         if (response[i].plane_id == selected_plane_id) {
                             if (response[i].info == null) {
-<<<<<<< HEAD
-                                response[i].info = [];
-                                response[i].info.push(instanceid);
-                                console.log(response[i].id);
-=======
                                 console.log("null");
                                 infoarray = [];
                                 infoarray.push(instanceid);
                                 
->>>>>>> 241c14a51c26ee26e17ca1a76115a15aad57fb68
                                 $.ajax(mainUrl + "seats/"+ response[i].id, {
                                     type: "PUT",
                                     xhrFields: {
                                         withCredentials: true
                                     },
                                     data: {
-<<<<<<< HEAD
-                                        seat: {
-                                        info: "hit"}
-=======
                                         seat:{
                                         info: JSON.stringify(infoarray)
                                     },
->>>>>>> 241c14a51c26ee26e17ca1a76115a15aad57fb68
                                     },
                                     async:false,
                                     success: function() {
                                         console.log("sucessaaa");
                                        seatid=response[i].id;
-<<<<<<< HEAD
-=======
                                        console.log(infoarray); 
->>>>>>> 241c14a51c26ee26e17ca1a76115a15aad57fb68
                                     },
                                     error: function() {
                                         alert("post info failed");
                                     }
                                 });
                                 break;
-<<<<<<< HEAD
-                               
-=======
->>>>>>> 241c14a51c26ee26e17ca1a76115a15aad57fb68
                             }
                         //if info is not null
                                     //如果info空，则post， 如果不空，如果有，下一个大loop，如果没有，post
@@ -437,26 +447,17 @@ $(document).ready(function () {
                                 if(contain==1){
                                    continue;
                                 }else{
-<<<<<<< HEAD
-                                    response[i].info.push(instanceid);
-=======
                                     infoarray=response[i].info;
                                     infoarray.push(instanceid);
                                     
->>>>>>> 241c14a51c26ee26e17ca1a76115a15aad57fb68
                                     $.ajax(mainUrl + "seats/"+ response[i].id, {
                                         type: "PUT",
                                         xhrFields: {
                                             withCredentials: true
                                         },
                                         data: {
-<<<<<<< HEAD
-                                            seat: {
-                                                info: response[i].info}
-=======
                                             seat:{
                                                 info: JSON.stringify(infoarray)}
->>>>>>> 241c14a51c26ee26e17ca1a76115a15aad57fb68
                                         },
                                         async:false,
                                         success: function() {
