@@ -152,9 +152,13 @@ $(document).ready(function () {
         // search.append('<input type="text" id="source" value=\"Seattle\" placeholder="From City or Airport"><br>');
         // search.append('<input type="text" id="destination" value=\"New York\" placeholder="To City or Airport"><br>');
         //autocomplete
-        let sourceInput = $('<input type="text" list = "dlAutoComplete" id="source" placeholder="From City or Airport"><br>');
-        let destinationInput = $('<input type="text" list = "dlAutoComplete" id="destination" placeholder="To City or Airport"><br>');
+        let sourceInput = $('<input type="text" list = "dlAutoComplete" id="source" placeholder="From City"><br>');
+        let destinationInput = $('<input type="text" list = "dlAutoComplete" id="destination" placeholder="To City"><br>');
+        search.append('<span style="font-size: 30px; color: #404040;"><i class="fas fa-plane-departure"></i></span>');
+        search.append('<span id = "depart_span_search">Departure City: </span>');
         search.append(sourceInput);
+        search.append('<span style="font-size: 30px; color: #404040;"><i class="fas fa-plane-arrival"></i></span>');
+        search.append('<span id = "arrival_span_search">Arrival City: </span>');
         search.append(destinationInput);
 
         //city name datalist for autocomplete
@@ -178,6 +182,8 @@ $(document).ready(function () {
             }
 
         });
+        search.append('<span style="font-size: 30px; color: #404040;"><i class="fas fa-calendar-alt"></i></span>');
+        search.append('<span id = "date_span_search">Date: </span>');
         search.append('<input type="text" value=\"2019-01-22\" id="d_date"><br>');
         search.append('<button id="search_btn">Search</button>');
 
@@ -186,7 +192,7 @@ $(document).ready(function () {
         body.append('<div id="result_div"></div>');
         body.append('<table id="result"></table>');
 
-        body.append('<div id="logoutBtn">LOGOUT</div>')
+        body.append('<button id="logoutBtn" onclick="logout();"><span>Log Out</span></button>')
         $("#loginBtn").css("display","none");
     }
    
@@ -195,10 +201,14 @@ $(document).ready(function () {
     build_login_interface = function () {
         let body = $("#body");
         body.empty();
-        body.append("<h1>What the fuck</h1>");
+        body.append('<span style="font-size: 80px; color: #404040;"><i class="fas fa-globe-americas"></i></span><span class = "flight_regis_header">Flight Registration</span>');
         body.append("<div id=\"login_div\"></div>");
-        $("#login_div").append("User:<input type=\"text\" id=\"login_user\"><br>Password: <input type=\"password\" id=\"login_pass\"><br>");
-        $("#login_div").append(" <button id=\"login_btn\">Login</button>");
+        $("#login_div").append('<span style="font-size: 30px; color: #404040;"><i class="fas fa-user"></i></span>');
+        $("#login_div").append('<span class = "login_user_span">User: </span><input type="text" value="issacqi" id="login_user"><br></br>');
+        $("#login_div").append('<span style="font-size: 30px; color: #404040;"><i class="fas fa-key"></i></span>');
+        $("#login_div").append('<span class = "login_password_span">Password: </span><input type="password" value="111111" id="login_pass"><br>');
+        //$("#login_div").append("User:<input type=\"text\" id=\"login_user\"><br>Password: <input type=\"password\" id=\"login_pass\"><br>");
+        $("#login_div").append(" <button id=\"login_btn\"><span>Login</span></button>");
 
         
 
@@ -298,6 +308,8 @@ $(document).ready(function () {
                                                         row.append("<td>"+source+" arrow "+destination+"</td>");
                                                         row.append('<button id = "select_btn" data-airline-name = "' + airline_name + '" data-flight-number = "' + flight_number + '" data-source = "' + source + '" data-destination = "' + destination + '" data-departure-time = "' + departure_time + '" data-arrival-time = "' + arrival_time + '" data-instance-id ="' +response[j].id+ '" data-flight-id ="' +flight_id+ '" data-date="' + date +'">Select</button>');
                                                     }
+                                                    
+                                                    //console.log("hitagain");
                                                 }
                                             }
 
@@ -310,7 +322,7 @@ $(document).ready(function () {
                             }
                         });
                     }
-                })
+                });
 
 
             }
