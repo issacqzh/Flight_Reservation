@@ -5,9 +5,9 @@ $(document).ready(function () {
     $(document).on("click", "#register", function () {
         let body = $("#body");
         body.empty();
-        body.append("<h1>New User</h1>");
+        body.append("<span id = 'new_user_header'>New User</span>");
         body.append("<div id=\"register_div\"></div>");
-        $("#register_div").append("User:<input type=\"text\" id=\"register_user\"><br>Password: <input type=\"password\" id=\"register_pass\"><br>");
+        $("#register_div").append("<span id = 'user_span_in_new'>User:</span><input type=\"text\" id=\"register_user\"><br><span id = 'password_span_in_new'>Password: </span><input type=\"password\" id=\"register_pass\"><br>");
         $("#register_div").append("<button id=\"register_btn\">Sign Up</button>");
         body.append("<span id=\"back\">Click here to return back</span>");
     });
@@ -91,11 +91,11 @@ $(document).ready(function () {
     $(document).on("click", "#change_pass", function () {
         let body = $("#body");
         body.empty();
-        body.append("<h1>Change Your Password</h1>");
+        body.append("<span id='change_password_header'>Change Your Password</span>");
         body.append("<div id=\"change_div\"></div>");
-        $("#change_div").append("Username:<input type=\"text\" id=\"change_user\"><br>")
-        $("#change_div").append("Old Password: <input type = \"password\" id=\"old_pass\"><br>");
-        $("#change_div").append("New Password: <input type = \"password\" id=\"new_pass\"><br>");
+        $("#change_div").append("<span id = 'user_span_in_change'>Username:</span><input type=\"text\" id=\"change_user\"><br>")
+        $("#change_div").append("<span id = 'old_span_in_change'>Old Password: </span><input type = \"password\" id=\"old_pass\"><br>");
+        $("#change_div").append("<span id = 'new_span_in_change'>New Password: </span><input type = \"password\" id=\"new_pass\"><br>");
         $("#change_div").append("<button id=\"change_btn\">Change Password</button>");
         $("#change_div").append("<button id=\"change_back\">Go Back</button>")
     });
@@ -139,7 +139,9 @@ $(document).ready(function () {
     build_main_interface = function () {
         let body = $("#body");
         body.empty();
-        body.append("<h1>Book your next fantastic flight</h1>")
+        body.append('<button id = "tickets_btn">My Ticket</button>');
+        body.append('<button id="logoutBtn" onclick="logout();"><span>Log Out</span></button>');
+        body.append('<span id = "next_fantastic">Book your next fantastic flight~</span>');
         search_div = ("<div id=\"search_div\"></div>");
         body.append(search_div);
         search = $("#search_div");
@@ -180,12 +182,11 @@ $(document).ready(function () {
         search.append('<input type="text" value=\"2019-01-22\" id="d_date"><br>');
         search.append('<button id="search_btn">Search</button>');
 
-        body.append('<button id = "tickets_btn">My Ticket</button>');
+        
 
         body.append('<div id="result_div"></div>');
         body.append('<table id="result"></table>');
 
-        body.append('<button id="logoutBtn" onclick="logout();"><span>Log Out</span></button>')
         $("#loginBtn").css("display","none");
     }
 
@@ -277,7 +278,7 @@ $(document).ready(function () {
                                                
                                                         row=$("<tr></tr>");
                                                        $("#result").append(row);
-                                                       row.append("<td>"+departure_time+"<td>");
+                                                       row.append("<td>"+departure_time+"</td>");
                                                        row.append("<td>"+arrival_time+"</td>");
                                                        airline_name="";
                                                        $.ajax(mainUrl + "airlines", {
@@ -297,7 +298,10 @@ $(document).ready(function () {
                                                     });
                                                         row.append("<td>"+airline_name+"</td>");
                                                         row.append("<td>"+flight_number+"</td>");
-                                                        row.append("<td>"+source+" arrow "+destination+"</td>");
+                                                        row.append("<td>" + source + "</td>");
+                                                        row.append('<span style="font-size: 30px; color: #404040;"><i class="fas fa-arrow-right"></i></span>');
+                                                        row.append("<td>" + destination + "</td>");
+                                                        //row.append("<td>"+source+" arrow "+destination+"</td>");
                                                         row.append('<button id = "select_btn" data-airline-name = "' + airline_name + '" data-flight-number = "' + flight_number + '" data-source = "' + source + '" data-destination = "' + destination + '" data-departure-time = "' + departure_time + '" data-arrival-time = "' + arrival_time + '" data-instance-id ="' +response[j].id+ '" data-flight-id ="' +flight_id+ '" data-date="' + date +'">Select</button>');
                                                     }
                                                     
@@ -340,14 +344,14 @@ $(document).ready(function () {
         let airlinenameid = $(this).attr("data-airline-name");
         let flightnumberid = $(this).attr("data-flight-number");
         $("#body").empty();
-        $("#body").append("<h1>Please enter your information</h1>");
+        $("#body").append("<span id = 'enter_info_header'>Please enter your information</span>");
         var info_div = $("<div></div>");
         $("#body").append(info_div);
-        info_div.append('Lastname: <input type ="text" id="lastname"></input><br>');
-        info_div.append('Firstname: <input type ="text" id="firstname"></input><br>');
-        info_div.append('Age: <input type ="text" id="age"></input><br>');
-        info_div.append('Gender: <input type ="text" id="gender"></input><br>');
-        info_div.append('Email: <input type ="text" id="email"></input><br>');
+        info_div.append('<span id = "last_in_confirm">Last Name: </span><input type ="text" id="lastname"></input><br>');
+        info_div.append('<span id = "first_in_confirm">First Name: </span><input type ="text" id="firstname"></input><br>');
+        info_div.append('<span id = "age_in_confirm">Age: </span><input type ="text" id="age"></input><br>');
+        info_div.append('<span id = "gender_in_confirm">Gender: </span><input type ="text" id="gender"></input><br>');
+        info_div.append('<span id = "email_in_confirm">Email: </span><input type ="text" id="email"></input><br>');
         info_div.append('<button data-date = "' + dateid + '" data-source = "' + sourceid + '" data-destination = "' + destinationid + '" data-airline-name = "' + airlinenameid + '" data-flight-number = "' + flightnumberid + '" data-departure-time = "' + departuretimeid + '" data-arrival-time = "' + arrivaltimeid + '" data-instance-id = "'+instanceid+ '" data-flight-id ="' +flightid+ '" id = "confirm_btn">Confirm</button>');
     });
 
@@ -510,7 +514,7 @@ $(document).ready(function () {
                     let age=$("#age").val();
                     let gender=$("#gender").val();
                     $("#body").empty();
-                    $("#body").append("<h1>Your ticket</h1>");
+                    $("#body").append("<span class = 'your_ticket'>Your ticket</span>");
                     $("#body").append("<table id='ticket_result'></table>")
                     $("#ticket_result").append($("<tr id='mingzi'></tr>"));
                     $("#mingzi").append("<td>Name: </td>");
@@ -603,7 +607,7 @@ $(document).ready(function () {
 
     $(document).on("click", "#tickets_btn", function () {
         $("#body").empty();
-        $("#body").append("<h1>My Tickets</h1>")
+        $("#body").append("<span id = 'my_ticket'>My Tickets</span>")
         $("#body").append("<table id = 'myTicketTable'></table>");
         $("#body").append("<button id='ticketback'>Go Back</button>")
         $("#myTicketTable").append("<tr id='headings'></tr>");

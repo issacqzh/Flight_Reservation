@@ -1,6 +1,8 @@
 body {
     background-color: #efa02f;
     text-align: center;
+    font-family: 'Gamja Flower', cursive;
+    font-weight: bold;
 }
 
 #login_div {
@@ -8,7 +10,7 @@ body {
     padding: 50px;
 }
 
-button {
+#login_btn {
     display: inline-block;
     background-color: #666666;
     color: #d9d9d9;
@@ -16,18 +18,17 @@ button {
     border-color: #666666;
     border-width: 1px;
     text-align: center;
-    font-size: 20px;
+    font-size: 45px;
     padding: 15px;
     width: 180px;
     height: 80px;
     transition: all 0.5s;
     cursor: pointer;
     margin: 20px;
-    font-size: 30px;
-    font-family: Helvetica, Arial, sans-serif;
+    font-family: 'Gamja Flower', cursive;
 }
 
-button span {
+#login_btn span {
     cursor: pointer;
     display: inline-block;
     position: relative;
@@ -52,45 +53,68 @@ button span {
     right: 0;
 }
 
-#logoutBtn span:after {
-    content: '\003E\003E';
-    position: absolute;
-    opacity: 0;
-    top: 0;
-    right: -60px;
-    transition: 0.5s;
-}
-
-#logoutBtn:hover span {
-    padding-right: 40px;
-}
-
-#logoutBtn:hover span:after {
-    opacity: 1;
-    right: 0;
-}
-
-.flight_regis_header {
-    font-family: Helvetica, Arial, sans-serif;
-    font-size: 50px;
+.flight_regis_header, #next_fantastic, #my_ticket, #new_user_header, #change_password_header, #enter_info_header, .your_ticket {
+    font-size: 70px;
     color: #404040;
-    font-weight: bold;
+}
+
+#ticket_result {
+    text-align: center;
+    margin: 0 auto;
+}
+
+#ticket_result td {
+    font-size: 30px;
+    color: #404040;
+    width: 200px;
+}
+
+#result td {
+    font-size: 30px;
+    color: #404040;
+    width: 200px;
+}
+
+#myTicketTable {
+    color: #404040;
+    font-size: 30px;
+}
+
+#myTicketTable th {
+    width: 170px;
+}
+
+#next_fantastic {
+    padding-left: 200px;
 }
 
 input {
-    font-family: Helvetica, Arial, sans-serif;
     font-size: 20px;
     color: #404040;
     margin: 30px;
-    padding: 20px;
+    padding: 15px;
 }
 
-.login_user_span, .login_password_span, #depart_span_search, #arrival_span_search, #date_span_search{
+.login_user_span, .login_password_span, #depart_span_search, #arrival_span_search, 
+#date_span_search, #user_span_in_new, #password_span_in_new, #back, #user_span_in_change, 
+#old_span_in_change, #new_span_in_change, #last_in_confirm, #first_in_confirm, #age_in_confirm, 
+#gender_in_confirm, #email_in_confirm{
     text-align: left;
-    font-family: Helvetica, Arial, sans-serif;
-    font-size: 25px;
+    font-size: 35px;
     color: #404040;
     font-weight: bold;
+}
+
+#age_in_confirm {
+    padding-right: 95px;
+}
+
+#gender_in_confirm {
+    padding-right: 50px;
+}
+
+#email_in_confirm {
+    padding-right: 70px;
 }
 
 .login_user_span {
@@ -101,16 +125,80 @@ input {
     padding-right: 20px;
 }
 
+#user_span_in_new {
+    padding-right: 65px;
+}
+
+#user_span_in_change {
+    padding-right: 60px;
+}
+
+#old_span_in_change {
+    padding-right: 10px;
+}
+
 input[type=text]:focus {
     background-color: #ceccca;
 }
 
 #register, #change_pass {
-    font-family: Helvetica, Arial, sans-serif;
-    font-size: 25px;
+    font-size: 40px;
     color: #404040;
     font-weight: bold;
     display:inline-block;
     margin-top: 10px;
     margin-bottom: 10px;
 }
+
+#tickets_btn, #logoutBtn {
+    float: right;
+}
+
+#logoutBtn, #tickets_btn, #search_btn, #ticketback, #register_btn, 
+#change_btn, #change_back, #select_btn, #confirm_btn, #confirm_back, .cancel{
+    display: inline-block;
+    background-color: #666666;
+    color: #d9d9d9;
+    border-radius: 10px;
+    border-color: #666666;
+    border-width: 1px;
+    text-align: center;
+    font-size: 23px;
+    padding: 5px;
+    width: 100px;
+    height: 60px;
+    font-family: 'Gamja Flower', cursive;
+    margin: 10px;
+}
+
+#search_btn {
+    width: 150px;
+    height: 90px;
+    font-size: 40px;
+}
+
+#ticketback {
+    height: 50px;
+}
+
+#change_btn {
+    width: 200px;
+}
+
+#select_btn {
+    width: 80px;
+    height: 50px;
+}
+
+#source, #destination, #d_date{
+    width: 200px;
+}
+
+#arrival_span_search {
+    padding-right: 50px;
+}
+
+#date_span_search {
+    padding-right: 150px;
+}
+
