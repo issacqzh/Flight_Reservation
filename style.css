@@ -1,5 +1,5 @@
 body {
-    background-color: #B0C4DE;
+    background-color: #efa02f;
     text-align: center;
 }
 
@@ -8,9 +8,9 @@ body {
     padding: 50px;
 }
 
-#login_btn {
+button {
     display: inline-block;
-    background-color: #808080;
+    background-color: #666666;
     color: #d9d9d9;
     border-radius: 10px;
     border-color: #666666;
@@ -18,13 +18,16 @@ body {
     text-align: center;
     font-size: 20px;
     padding: 15px;
-    width: 120px;
+    width: 180px;
+    height: 80px;
     transition: all 0.5s;
     cursor: pointer;
-    margin: 5px;
+    margin: 20px;
+    font-size: 30px;
+    font-family: Helvetica, Arial, sans-serif;
 }
 
-#login_btn span {
+button span {
     cursor: pointer;
     display: inline-block;
     position: relative;
@@ -32,16 +35,16 @@ body {
 }
 
 #login_btn span:after {
-    content: '\00bb';
+    content: '\003E\003E';
     position: absolute;
     opacity: 0;
     top: 0;
-    right: -20px;
+    right: -60px;
     transition: 0.5s;
 }
 
 #login_btn:hover span {
-    padding-right: 25px;
+    padding-right: 40px;
 }
 
 #login_btn:hover span:after {
@@ -49,21 +52,65 @@ body {
     right: 0;
 }
 
-#register {
-    font-family: Helvetica, Arial, sans-serif;
-    font-size: 20px;
-    color: #404040;
+#logoutBtn span:after {
+    content: '\003E\003E';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -60px;
+    transition: 0.5s;
 }
 
-h1 {
-    font-family: "Times New Roman", Times, serif;
+#logoutBtn:hover span {
+    padding-right: 40px;
+}
+
+#logoutBtn:hover span:after {
+    opacity: 1;
+    right: 0;
+}
+
+.flight_regis_header {
+    font-family: Helvetica, Arial, sans-serif;
     font-size: 50px;
     color: #404040;
+    font-weight: bold;
 }
 
-#login_user,
-#login_pass {
+input {
     font-family: Helvetica, Arial, sans-serif;
     font-size: 20px;
     color: #404040;
+    margin: 30px;
+    padding: 20px;
+}
+
+.login_user_span, .login_password_span, #depart_span_search, #arrival_span_search, #date_span_search{
+    text-align: left;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 25px;
+    color: #404040;
+    font-weight: bold;
+}
+
+.login_user_span {
+    padding-right: 77px;
+}
+
+.login_password_span {
+    padding-right: 20px;
+}
+
+input[type=text]:focus {
+    background-color: #ceccca;
+}
+
+#register, #change_pass {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 25px;
+    color: #404040;
+    font-weight: bold;
+    display:inline-block;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }

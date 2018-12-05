@@ -3,7 +3,7 @@ $(document).ready(function () {
 
     //go to the register interface
     $(document).on("click", "#register", function () {
-        let body = $("body");
+        let body = $("#body");
         body.empty();
         body.append("<h1>New User</h1>");
         body.append("<div id=\"register_div\"></div>");
@@ -79,6 +79,7 @@ $(document).ready(function () {
             async:false,
             success: function () {
                 build_login_interface();
+                $("#loginBtn").css("display","block");
             },
             error: function () {
                 alert("action failed");
@@ -88,7 +89,7 @@ $(document).ready(function () {
 
     //change_password_interface
     $(document).on("click", "#change_pass", function () {
-        let body = $("body");
+        let body = $("#body");
         body.empty();
         body.append("<h1>Change Your Password</h1>");
         body.append("<div id=\"change_div\"></div>");
@@ -136,19 +137,22 @@ $(document).ready(function () {
 
     //build_main_interface
     build_main_interface = function () {
-        let body = $("body");
+        let body = $("#body");
         body.empty();
         body.append("<h1>Book your next fantastic flight</h1>")
         search_div = ("<div id=\"search_div\"></div>");
         body.append(search_div);
         search = $("#search_div");
-        //search.append('<input type="text" id="source" value=\"Seattle\" placeholder="From City or Airport"><br>');
-        //search.append('<input type="text" id="destination" value=\"New York\" placeholder="To City or Airport"><br>');
-
+        // search.append('<input type="text" id="source" value=\"Seattle\" placeholder="From City or Airport"><br>');
+        // search.append('<input type="text" id="destination" value=\"New York\" placeholder="To City or Airport"><br>');
         //autocomplete
-        let sourceInput = $('<input type="text" list = "dlAutoComplete" id="source" placeholder="From City or Airport"><br>');
-        let destinationInput = $('<input type="text" list = "dlAutoComplete" id="destination" placeholder="To City or Airport"><br>');
+        let sourceInput = $('<input type="text" list = "dlAutoComplete" id="source" placeholder="From City"><br>');
+        let destinationInput = $('<input type="text" list = "dlAutoComplete" id="destination" placeholder="To City"><br>');
+        search.append('<span style="font-size: 30px; color: #404040;"><i class="fas fa-plane-departure"></i></span>');
+        search.append('<span id = "depart_span_search">Departure City: </span>');
         search.append(sourceInput);
+        search.append('<span style="font-size: 30px; color: #404040;"><i class="fas fa-plane-arrival"></i></span>');
+        search.append('<span id = "arrival_span_search">Arrival City: </span>');
         search.append(destinationInput);
 
         //city name datalist for autocomplete
@@ -171,33 +175,36 @@ $(document).ready(function () {
             }
 
         });
-
+        search.append('<span style="font-size: 30px; color: #404040;"><i class="fas fa-calendar-alt"></i></span>');
+        search.append('<span id = "date_span_search">Date: </span>');
         search.append('<input type="text" value=\"2019-01-22\" id="d_date"><br>');
         search.append('<button id="search_btn">Search</button>');
 
         body.append('<button id = "tickets_btn">My Ticket</button>');
 
         body.append('<div id="result_div"></div>');
-        body.append('<table id="result"></table>')
+        body.append('<table id="result"></table>');
 
-
-        body.append('<div id="logoutBtn" onclick="logout();">LOGOUT</div>')
-
-
+        body.append('<button id="logoutBtn" onclick="logout();"><span>Log Out</span></button>')
+        $("#loginBtn").css("display","none");
     }
 
     //build_login_interface
     build_login_interface = function () {
-        let body = $("body");
+        let body = $("#body");
         body.empty();
-        body.append("<h1>What the fuck</h1>");
+        body.append('<span style="font-size: 80px; color: #404040;"><i class="fas fa-globe-americas"></i></span><span class = "flight_regis_header">Flight Registration</span>');
         body.append("<div id=\"login_div\"></div>");
-        $("#login_div").append("User:<input type=\"text\" id=\"login_user\"><br>Password: <input type=\"password\" id=\"login_pass\"><br>");
-        $("#login_div").append(" <button id=\"login_btn\">Login</button>");
+        $("#login_div").append('<span style="font-size: 30px; color: #404040;"><i class="fas fa-user"></i></span>');
+        $("#login_div").append('<span class = "login_user_span">User: </span><input type="text" value="issacqi" id="login_user"><br></br>');
+        $("#login_div").append('<span style="font-size: 30px; color: #404040;"><i class="fas fa-key"></i></span>');
+        $("#login_div").append('<span class = "login_password_span">Password: </span><input type="password" value="111111" id="login_pass"><br>');
+        //$("#login_div").append("User:<input type=\"text\" id=\"login_user\"><br>Password: <input type=\"password\" id=\"login_pass\"><br>");
+        $("#login_div").append(" <button id=\"login_btn\"><span>Login</span></button>");
 
         
 
-        loginbutton='<fb:login-button widthscope="public_profile,email" display="block" onlogin="checkLoginState();"></fb:login-button>';
+        loginbutton='<div id="loginBtn display="block"><fb:login-button widthscope="public_profile,email" display="block" onlogin="checkLoginState();"></fb:login-button></div>';
         body.append(loginbutton);
         body.append("<span id=\"register\">Click here to create a new account</span><br>");
         body.append("<span id=\"change_pass\">Click here to change your password</span>");
@@ -332,10 +339,10 @@ $(document).ready(function () {
         let arrivaltimeid = $(this).attr("data-arrival-time");
         let airlinenameid = $(this).attr("data-airline-name");
         let flightnumberid = $(this).attr("data-flight-number");
-        $("body").empty();
-        $("body").append("<h1>Please enter your information</h1>");
+        $("#body").empty();
+        $("#body").append("<h1>Please enter your information</h1>");
         var info_div = $("<div></div>");
-        $("body").append(info_div);
+        $("#body").append(info_div);
         info_div.append('Lastname: <input type ="text" id="lastname"></input><br>');
         info_div.append('Firstname: <input type ="text" id="firstname"></input><br>');
         info_div.append('Age: <input type ="text" id="age"></input><br>');
@@ -407,7 +414,7 @@ $(document).ready(function () {
                     for (i = 0; i < response.length; i++) {
                         //if info is null
                         if (response[i].plane_id == selected_plane_id) {
-                            if (response[i].info == null) {
+                            if (response[i].info == "") {
                                 console.log("null");
                                 infoarray = [];
                                 infoarray.push(instanceid);
@@ -492,7 +499,8 @@ $(document).ready(function () {
                         age: $("#age").val(),
                         gender: $("#gender").val(),
                         instance_id: instanceid,
-                        seat_id:seatid
+                        seat_id:seatid,
+                        info:conf_code
                       }
                 },
                 async:false,
@@ -501,9 +509,9 @@ $(document).ready(function () {
                     let lastName=$("#lastname").val();
                     let age=$("#age").val();
                     let gender=$("#gender").val();
-                    $("body").empty();
-                    $("body").append("<h1>Your ticket</h1>");
-                    $("body").append("<table id='ticket_result'></table>")
+                    $("#body").empty();
+                    $("#body").append("<h1>Your ticket</h1>");
+                    $("#body").append("<table id='ticket_result'></table>")
                     $("#ticket_result").append($("<tr id='mingzi'></tr>"));
                     $("#mingzi").append("<td>Name: </td>");
                     $("#mingzi").append("<td>"+firstName+" "+lastName+"</td>");
@@ -576,6 +584,7 @@ $(document).ready(function () {
                     $("#ticket_result").append($("<tr id='hangkong'></tr>"));
                     $("#hangkong").append("<td>Airline: </td>");
                     $("#hangkong").append("<td>"+airlinenameid+ "</td>");
+                    $("#body").append("<button id='confirm_back'>Go Back</button>");
                     
                 },
                 error: function () {
@@ -585,14 +594,229 @@ $(document).ready(function () {
 
         });
 
-
-  
+    $(document).on("click","#ticketback",function(){
+        build_main_interface();
+    });
+    $(document).on("click","#confirm_back",function(){
+        build_main_interface();
+    });
 
     $(document).on("click", "#tickets_btn", function () {
-        
+        $("#body").empty();
+        $("#body").append("<h1>My Tickets</h1>")
+        $("#body").append("<table id = 'myTicketTable'></table>");
+        $("#body").append("<button id='ticketback'>Go Back</button>")
+        $("#myTicketTable").append("<tr id='headings'></tr>");
+        $("#headings").append("<th>First Name: </th>");
+        $("#headings").append("<th>Last Name: </th>");
+        $("#headings").append("<th>Confirmation Code: </th>");
+        $("#headings").append("<th>Seat: </th>");
+        $("#headings").append("<th>Date: </th>");
+        $("#headings").append("<th>Flight Number: </th>");
+        $("#headings").append("<th>Departure Time: </th>");
+        $("#headings").append("<th>Arrival Time: </th>");
 
+
+        $.ajax(mainUrl+"tickets",{
+            type:"GET",
+            xhrFields: {
+                withCredentials: true
+            },
+            datatype: JSON,
+            async:false,
+            success: function (response) {
+                for(i=0;i<response.length;i++){
+                    fname=response[i].first_name;
+                    lname=response[i].last_name;
+                    instanceid=response[i].instance_id;
+                    itineraryid=response[i].itinerary_id;
+                    seatid=response[i].seat_id;  
+                
+                    confirmationcode=response[i].info; 
+               
+                    rowid=0;
+                    number="";
+                    flightid="";
+                    date="";
+                    flightnumber="";
+                    depart_time="";
+                    arrive_time="";
+                    $.ajax(mainUrl+"seats/"+seatid,{
+                        type:"GET",
+                        xhrFields: {
+                            withCredentials: true
+                        },
+                        datatype: JSON,
+                        async:false,   
+                        success: function(response){
+                            rowid=response.row;
+                            number=response.number;
+                        },
+                        error:function(){
+                            alert("seat failed")
+                        }        
+                    });
+                    console.log(itineraryid);
+                   
+                    $.ajax(mainUrl+"instances/"+instanceid,{
+                        type:"GET",
+                        xhrFields: {
+                            withCredentials: true
+                        },
+                        datatype: JSON,
+                        async:false,   
+                        success: function(response){
+                          flightid =response.flight_id;
+                          date=response.date;
+                        },
+                        error:function(){
+                            alert("instance failed")
+                        }        
+                    });
+                    $.ajax(mainUrl+"flights/"+flightid,{
+                        type:"GET",
+                        xhrFields: {
+                            withCredentials: true
+                        },
+                        datatype: JSON,
+                        async:false,   
+                        success: function(response){
+                           flightnumber=response.number;
+                           depart_time=response.departs_at;
+                           arrive_time=response.arrives_at;
+                        },
+                        error:function(){
+                            alert("flight failed")
+                        }        
+                    });
+
+                   
+                    let row = $("<tr></tr>");
+                    $("#myTicketTable").append(row);
+                    
+                    row.append("<td>" + fname + "</td>");
+                    
+                    row.append("<td>" + lname+ "</td>");
+                    
+                    row.append("<td class='confcode' id = '"+ confirmationcode + "'>" + confirmationcode + "</td>");
+                    
+                    row.append("<td class='seatid' id = '" + seatid + "'>" + rowid + number + "</td>");
+                    
+                    row.append("<td>" + date + "</td>");
+                    
+                    row.append("<td id='"+instanceid+"' class='instanceid'>" + flightnumber + "</td>");
+                    
+                    row.append("<td>" + depart_time + "</td>");
+                    
+                    row.append("<td>" + arrive_time + "</td>");
+
+                    row.append('<button class="cancel" id = "'+ response[i].id +'">Cancel</button>');
+                }
+            },
+            error: function() {
+                alert("get tickets failed");
+            }
+        });
 
     });
+
+    //cancel
+    $(document).on("click",".cancel",function(){
+        instanceid=$(this).parent().children(".instanceid").attr("id");
+        ticketid=$(this).attr("id");
+        seatid=$(this).parent().children(".seatid").attr("id");
+        confcode=$(this).parent().children(".confcode").attr("id");
+       itineraryid="";
+        $.ajax(mainUrl+"tickets/"+ticketid,{
+            type:"DELETE",
+            xhrFields: {
+                withCredentials: true
+            },
+            datatype: JSON,
+            async:false,   
+            success: function(){
+               
+            },
+            error:function(){
+                alert("ticket delete failed");
+            }        
+        });
+        $.ajax(mainUrl+"itineraries",{
+            type:"GET",
+            xhrFields: {
+                withCredentials: true
+            },
+            datatype: JSON,
+            async:false,   
+            success: function(response){
+               for(k=0;k<response.length;k++){
+                   if(response[k].confirmation_code==confcode){
+                       itineraryid=response[k].id;
+                   }
+               }
+            },
+            error:function(){
+                alert("itinerary get failed");
+            }        
+        });
+
+        console.log(itineraryid);
+        $.ajax(mainUrl+"itineraries/"+itineraryid,{
+            type:"DELETE",
+            xhrFields: {
+                withCredentials: true
+            },
+            datatype: JSON,
+            async:false,   
+            success: function(){
+               
+            },
+            error:function(){
+                alert("itinerary delete failed");
+            }        
+        });
+        $.ajax(mainUrl+"seats/"+seatid,{
+            type:"GET",
+            xhrFields: {
+                withCredentials: true
+            },
+            datatype: JSON,
+            async:false,   
+            success: function(response){
+              infoarray= response.info 
+              for(j=0;j<infoarray.length;j++){
+                  if(infoarray[j]==instanceid){
+                      infoarray.splice(j,1);
+                      break;
+                  }
+              }
+              $.ajax(mainUrl+"seats/"+seatid,{
+                type:"PUT",
+                xhrFields: {
+                    withCredentials: true
+                },
+                datatype: JSON,
+                async:false,   
+                data:{
+                    seat:{
+                        info:JSON.stringify(infoarray)
+                    }
+                },
+                success:function(){
+                },
+                error:function(){
+                    alert("bug");
+                }
+            
+            })
+            },
+            error:function(){
+                alert("seat get failed");
+            }        
+        });
+        $(this).parent().remove();
+    });
+
 
 });
 
