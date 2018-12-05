@@ -6,6 +6,7 @@
   <title>Final Project</title>
   <script type="text/javascript" src="http://ajax.cdnjs.com/ajax/libs/json2/20110223/json2.js"></script>
   <script src="http://www.cs.unc.edu/~kmp/comp426fall18/jquery-3.3.1.js"></script>
+  <link rel="stylesheet" href="style.css">
   <script src="logic.js"></script>
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
   <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
@@ -34,20 +35,47 @@ window.fbAsyncInit = function() {
     
        function checkLoginState() {
       FB.getLoginStatus(function(response) {
+        
+        console.log(response);
         statusChangeCallback(response);
+        if(response.status=="connected"){
+          let user = "issacqi";
+        let pass = "111111";
+        $.ajax(mainUrl + 'sessions', {
+            type: 'POST',
+            xhrFields: {
+                withCredentials: true
+            },
+            data: {
+                user: {
+                    username: user,
+                    password: pass
+                }
+            },
+            async:false,
+            success: function () {
+                build_main_interface();
+            },
+            error: function () {
+                alert('username/password is incorrect');
+            }
+        });
+      
+      }
       });
     }
     function statusChangeCallback(response){
       FB.api('/me', function(response) {
-          console.log('Successful login for: ' + response.name);
-          build_main_interface();
+        if(typeof response.name!="undefined"){
+        console.log('Successful login for: ' + response.name);}
         });
+        
     }
     
     function logout(response){
         FB.logout(function(response){
-          build_login_interface();
-        
+     
+        console.log("log out");
         });
           
     }
