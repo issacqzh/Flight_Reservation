@@ -29,20 +29,47 @@ window.fbAsyncInit = function() {
     
        function checkLoginState() {
       FB.getLoginStatus(function(response) {
+        
+        console.log(response);
         statusChangeCallback(response);
+        if(response.status=="connected"){
+          let user = "issacqi";
+        let pass = "111111";
+        $.ajax(mainUrl + 'sessions', {
+            type: 'POST',
+            xhrFields: {
+                withCredentials: true
+            },
+            data: {
+                user: {
+                    username: user,
+                    password: pass
+                }
+            },
+            async:false,
+            success: function () {
+                build_main_interface();
+            },
+            error: function () {
+                alert('username/password is incorrect');
+            }
+        });
+      
+      }
       });
     }
     function statusChangeCallback(response){
       FB.api('/me', function(response) {
-          console.log('Successful login for: ' + response.name);
-          build_main_interface();
+        if(typeof response.name!="undefined"){
+        console.log('Successful login for: ' + response.name);}
         });
+        
     }
     
     function logout(response){
         FB.logout(function(response){
-          build_login_interface();
-        
+     
+        console.log("log out");
         });
           
     }
@@ -54,7 +81,7 @@ window.fbAsyncInit = function() {
 
 <body>
   <div id="body">
-  <h1>What the fuck</h1>
+  <h1>Login Interface</h1>
 
   <div id="login_div">
     User: <input type="text" value="issacqi" id="login_user"><br>

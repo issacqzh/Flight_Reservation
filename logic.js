@@ -71,6 +71,12 @@ $(document).ready(function () {
 
     //log off
     $(document).on("click", "#logoutBtn", function () {
+        FB.getLoginStatus(function(response) {
+            console.log(response);
+            if(response.status=="connected"){
+                logout();
+            }
+        });
         $.ajax(mainUrl + 'sessions', {
             type: "DELETE",
             xhrFields: {
@@ -163,6 +169,7 @@ $(document).ready(function () {
             async:false,
             success: function (response) {
                 for (i = 0; i < response.length; i++) {
+                    console.log(response[i].city);
                     cityDataList.append('<option value = "'+response[i].city+'"></option>>');
                 }
             },
@@ -179,9 +186,10 @@ $(document).ready(function () {
         body.append('<div id="result_div"></div>');
         body.append('<table id="result"></table>');
 
-        body.append('<div id="logoutBtn" onclick="logout();">LOGOUT</div>')
+        body.append('<div id="logoutBtn">LOGOUT</div>')
         $("#loginBtn").css("display","none");
     }
+   
 
     //build_login_interface
     build_login_interface = function () {
@@ -336,7 +344,9 @@ $(document).ready(function () {
         info_div.append('Age: <input type ="text" id="age"></input><br>');
         info_div.append('Gender: <input type ="text" id="gender"></input><br>');
         info_div.append('Email: <input type ="text" id="email"></input><br>');
+       
         info_div.append('<button data-date = "' + dateid + '" data-source = "' + sourceid + '" data-destination = "' + destinationid + '" data-airline-name = "' + airlinenameid + '" data-flight-number = "' + flightnumberid + '" data-departure-time = "' + departuretimeid + '" data-arrival-time = "' + arrivaltimeid + '" data-instance-id = "'+instanceid+ '" data-flight-id ="' +flightid+ '" id = "confirm_btn">Confirm</button>');
+        info_div.append('<button id="info_back">GO BACK</button>');
     });
 
     //ticket interface
@@ -403,9 +413,8 @@ $(document).ready(function () {
                         //if info is null
                         if (response[i].plane_id == selected_plane_id) {
                             if (response[i].info == "") {
-                                console.log("null");
-                                infoarray = [];
-                                infoarray.push(instanceid);
+                                
+                                infoarray = ""+instanceid;
                                 
                                 $.ajax(mainUrl + "seats/"+ response[i].id, {
                                     type: "PUT",
@@ -414,7 +423,7 @@ $(document).ready(function () {
                                     },
                                     data: {
                                         seat:{
-                                        info: JSON.stringify(infoarray)
+                                        info: infoarray
                                     },
                                     },
                                     async:false,
@@ -443,7 +452,9 @@ $(document).ready(function () {
                                    continue;
                                 }else{
                                     infoarray=response[i].info;
+                                    infoarray=infoarray.split(",");
                                     infoarray.push(instanceid);
+                                    infoarray=infoarray.toString();
                                     
                                     $.ajax(mainUrl + "seats/"+ response[i].id, {
                                         type: "PUT",
@@ -452,7 +463,7 @@ $(document).ready(function () {
                                         },
                                         data: {
                                             seat:{
-                                                info: JSON.stringify(infoarray)}
+                                                info: infoarray}
                                         },
                                         async:false,
                                         success: function() {
@@ -589,6 +600,9 @@ $(document).ready(function () {
         build_main_interface();
     });
 
+    $(document).on("click","#info_back",function(){
+        build_main_interface();
+    });
     $(document).on("click", "#tickets_btn", function () {
         $("#body").empty();
         $("#body").append("<h1>My Tickets</h1>")
@@ -694,6 +708,8 @@ $(document).ready(function () {
                     
                     row.append("<td id='"+instanceid+"' class='instanceid'>" + flightnumber + "</td>");
                     
+                    depart_time=depart_time.substring(11,19);
+                    arrive_time=arrive_time.substring(11,19);
                     row.append("<td>" + depart_time + "</td>");
                     
                     row.append("<td>" + arrive_time + "</td>");
@@ -772,12 +788,17 @@ $(document).ready(function () {
             async:false,   
             success: function(response){
               infoarray= response.info 
-              for(j=0;j<infoarray.length;j++){
+              infoarray=infoarray.split(",");
+              if(infoarray.length==1){
+                  infoarray="";
+              }
+              else{for(j=0;j<infoarray.length;j++){
                   if(infoarray[j]==instanceid){
                       infoarray.splice(j,1);
+                      infoarray=infoarray.toString();
                       break;
                   }
-              }
+              }}
               $.ajax(mainUrl+"seats/"+seatid,{
                 type:"PUT",
                 xhrFields: {
@@ -787,7 +808,7 @@ $(document).ready(function () {
                 async:false,   
                 data:{
                     seat:{
-                        info:JSON.stringify(infoarray)
+                        info:infoarray
                     }
                 },
                 success:function(){
