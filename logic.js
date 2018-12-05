@@ -184,7 +184,7 @@ $(document).ready(function () {
         });
         search.append('<span style="font-size: 30px; color: #404040;"><i class="fas fa-calendar-alt"></i></span>');
         search.append('<span id = "date_span_search">Date: </span>');
-        search.append('<input type="text" value=\"2019-01-22\" id="d_date"><br>');
+        search.append('<input type="date" value=\"2019-01-22\" id="d_date"><br>');
         search.append('<button id="search_btn">Search</button>');
 
         body.append('<button id = "tickets_btn">My Ticket</button>');
