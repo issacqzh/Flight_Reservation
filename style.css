@@ -183,7 +183,7 @@ input[type=text]:focus {
 }
 
 #logoutBtn, #tickets_btn, #search_btn, #ticketback, #register_btn, 
-#change_btn, #change_back, #select_btn, #confirm_btn, #confirm_back, .cancel{
+#change_btn, #change_back, #select_btn, #confirm_btn, #confirm_back, .cancel, #info_back{
     display: inline-block;
     background-color: #666666;
     color: #d9d9d9;
