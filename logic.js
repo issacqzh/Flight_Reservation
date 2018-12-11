@@ -72,7 +72,7 @@ $(document).ready(function () {
     //log off
     $(document).on("click", "#logoutBtn", function () {
         FB.getLoginStatus(function(response) {
-            console.log(response);
+            
             if(response.status=="connected"){
                 logout();
             }
@@ -114,11 +114,11 @@ $(document).ready(function () {
     //change_password
     $(document).on('click', '#change_btn', function () {
         let username = $("#change_user").val();
-        console.log(username);
+        
         let old_pass = $("#old_pass").val();
-        console.log(old_pass);
+        
         let new_pass = $("#new_pass").val();
-        console.log(new_pass);
+        
         $.ajax(mainUrl + 'passwords', {
             type: "PUT",
             xhrFields: {
@@ -175,7 +175,7 @@ $(document).ready(function () {
             async:false,
             success: function (response) {
                 for (i = 0; i < response.length; i++) {
-                    console.log(response[i].city);
+                    
                     cityDataList.append('<option value = "'+response[i].city+'"></option>>');
                 }
             },
@@ -186,7 +186,7 @@ $(document).ready(function () {
         });
         search.append('<span style="font-size: 30px; color: #404040;"><i class="fas fa-calendar-alt"></i></span>');
         search.append('<span id = "date_span_search">Date: </span>');
-        search.append('<input type="date" value=\"2019-01-22\" id="d_date"><br>');
+        search.append('<input type="date"  id="d_date"><br>');
         search.append('<button id="search_btn">Search</button>');
 
         
@@ -205,9 +205,9 @@ $(document).ready(function () {
         body.append('<span style="font-size: 80px; color: #404040;"><i class="fas fa-globe-americas"></i></span><span class = "flight_regis_header">Flight Registration</span>');
         body.append("<div id=\"login_div\"></div>");
         $("#login_div").append('<span style="font-size: 30px; color: #404040;"><i class="fas fa-user"></i></span>');
-        $("#login_div").append('<span class = "login_user_span">User: </span><input type="text" value="issacqi" id="login_user"><br></br>');
+        $("#login_div").append('<span class = "login_user_span">User: </span><input type="text"  id="login_user"><br></br>');
         $("#login_div").append('<span style="font-size: 30px; color: #404040;"><i class="fas fa-key"></i></span>');
-        $("#login_div").append('<span class = "login_password_span">Password: </span><input type="password" value="111111" id="login_pass"><br>');
+        $("#login_div").append('<span class = "login_password_span">Password: </span><input type="password" id="login_pass"><br>');
         //$("#login_div").append("User:<input type=\"text\" id=\"login_user\"><br>Password: <input type=\"password\" id=\"login_pass\"><br>");
         $("#login_div").append(" <button id=\"login_btn\"><span>Login</span></button>");
 
@@ -309,11 +309,12 @@ $(document).ready(function () {
                                                         row.append("<td>" + source + "</td>");
                                                         row.append('<span style="font-size: 30px; color: #404040;"><i class="fas fa-arrow-right"></i></span>');
                                                         row.append("<td>" + destination + "</td>");
-                                                        //row.append("<td>"+source+" arrow "+destination+"</td>");
+                                                       
+                                            
                                                         row.append('<button id = "select_btn" data-airline-name = "' + airline_name + '" data-flight-number = "' + flight_number + '" data-source = "' + source + '" data-destination = "' + destination + '" data-departure-time = "' + departure_time + '" data-arrival-time = "' + arrival_time + '" data-instance-id ="' +response[j].id+ '" data-flight-id ="' +flight_id+ '" data-date="' + date +'">Select</button>');
                                                     }
                                                     
-                                                    //console.log("hitagain");
+                                                   
                                                 }
                                             }
 
@@ -331,9 +332,9 @@ $(document).ready(function () {
 
             }
         });
+        $("#body").append('<div id="map"></div>');
 
-
-
+        initMap();
 
 
 
@@ -391,7 +392,7 @@ $(document).ready(function () {
                 },
                 async:false,
                 success: function () {
-                    console.log("success");
+                    
                 },
                 error: function () {
                     alert('itineraries post fail');
@@ -423,12 +424,12 @@ $(document).ready(function () {
                 datatype: JSON,
                 async:false,
                 success: function (response) {
-                    console.log("jinlai");
+                    
                     for (i = 0; i < response.length; i++) {
                         //if info is null
                         if (response[i].plane_id == selected_plane_id) {
-                            if (response[i].info == "") {
-                                
+                            if (response[i].info == ""||response[i].info===null||response[i].info===undefined) {
+                                    
                                 infoarray = ""+instanceid;
                                 
                                 $.ajax(mainUrl + "seats/"+ response[i].id, {
@@ -443,9 +444,8 @@ $(document).ready(function () {
                                     },
                                     async:false,
                                     success: function() {
-                                        console.log("sucessaaa");
                                        seatid=response[i].id;
-                                       console.log(infoarray); 
+                                       
                                     },
                                     error: function() {
                                         alert("post info failed");
@@ -457,8 +457,10 @@ $(document).ready(function () {
                                     //如果info空，则post， 如果不空，如果有，下一个大loop，如果没有，post
                             else {
                                 contain=0;
-                                for (j = 0; j < response[i].info.length; j++) {
-                                    if (response[i].info[j] ==instanceid ){
+                                infostring=response[i].info;
+                                infoarray=infostring.split(",");
+                                for (j = 0; j < infoarray.length; j++) {
+                                    if (infoarray[j] ==instanceid ){
                                             contain=1;
                                             break;
                                     }
@@ -466,8 +468,7 @@ $(document).ready(function () {
                                 if(contain==1){
                                    continue;
                                 }else{
-                                    infoarray=response[i].info;
-                                    infoarray=infoarray.split(",");
+                                   
                                     infoarray.push(instanceid);
                                     infoarray=infoarray.toString();
                                     
@@ -673,7 +674,7 @@ $(document).ready(function () {
                             alert("seat failed")
                         }        
                     });
-                    console.log(itineraryid);
+                    
                    
                     $.ajax(mainUrl+"instances/"+instanceid,{
                         type:"GET",
@@ -779,7 +780,7 @@ $(document).ready(function () {
             }        
         });
 
-        console.log(itineraryid);
+        
         $.ajax(mainUrl+"itineraries/"+itineraryid,{
             type:"DELETE",
             xhrFields: {

@@ -123,6 +123,19 @@ input {
     padding: 15px;
 }
 
+#map {
+  height: 100%;
+  overflow:visible;
+  position:absolute;
+}
+/* Optional: Makes the sample page fill the window. */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+
 .login_user_span, .login_password_span, #depart_span_search, #arrival_span_search, 
 #date_span_search, #user_span_in_new, #password_span_in_new, #back, #user_span_in_change, 
 #old_span_in_change, #new_span_in_change, #last_in_confirm, #first_in_confirm, #age_in_confirm, 
