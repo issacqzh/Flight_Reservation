@@ -332,9 +332,9 @@ $(document).ready(function () {
 
             }
         });
-        $("#body").append('<div id="map"></div>');
+        $("#body").append("<div id='map'></div>");
+    initMap();
 
-        initMap();
 
 
 
