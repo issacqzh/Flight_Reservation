@@ -156,10 +156,10 @@ $(document).ready(function () {
         //autocomplete
         let sourceInput = $('<input type="text" list = "dlAutoComplete" id="source" placeholder="From City"><br>');
         let destinationInput = $('<input type="text" list = "dlAutoComplete" id="destination" placeholder="To City"><br>');
-        search.append('<span style="font-size: 30px; color: #404040;"><i class="fas fa-plane-departure"></i></span>');
+        search.append('<span style="font-size: 30px; color: #1a1a1a;"><i class="fas fa-plane-departure"></i></span>');
         search.append('<span id = "depart_span_search">Departure City: </span>');
         search.append(sourceInput);
-        search.append('<span style="font-size: 30px; color: #404040;"><i class="fas fa-plane-arrival"></i></span>');
+        search.append('<span style="font-size: 30px; color: #1a1a1a;"><i class="fas fa-plane-arrival"></i></span>');
         search.append('<span id = "arrival_span_search">Arrival City: </span>');
         search.append(destinationInput);
 
@@ -184,7 +184,7 @@ $(document).ready(function () {
             }
 
         });
-        search.append('<span style="font-size: 30px; color: #404040;"><i class="fas fa-calendar-alt"></i></span>');
+        search.append('<span style="font-size: 30px; color: #1a1a1a;"><i class="fas fa-calendar-alt"></i></span>');
         search.append('<span id = "date_span_search">Date: </span>');
         search.append('<input type="date"  id="d_date"><br>');
         search.append('<button id="search_btn">Search</button>');
@@ -202,11 +202,11 @@ $(document).ready(function () {
     build_login_interface = function () {
         let body = $("#body");
         body.empty();
-        body.append('<span style="font-size: 80px; color: #404040;"><i class="fas fa-globe-americas"></i></span><span class = "flight_regis_header">Flight Registration</span>');
+        body.append('<span style="font-size: 80px; color: #1a1a1a;"><i class="fas fa-globe-americas"></i></span><span class = "flight_regis_header">Flight Registration</span>');
         body.append("<div id=\"login_div\"></div>");
-        $("#login_div").append('<span style="font-size: 30px; color: #404040;"><i class="fas fa-user"></i></span>');
+        $("#login_div").append('<span style="font-size: 30px; color: #1a1a1a;"><i class="fas fa-user"></i></span>');
         $("#login_div").append('<span class = "login_user_span">User: </span><input type="text"  id="login_user"><br></br>');
-        $("#login_div").append('<span style="font-size: 30px; color: #404040;"><i class="fas fa-key"></i></span>');
+        $("#login_div").append('<span style="font-size: 30px; color: #1a1a1a;"><i class="fas fa-key"></i></span>');
         $("#login_div").append('<span class = "login_password_span">Password: </span><input type="password" id="login_pass"><br>');
         //$("#login_div").append("User:<input type=\"text\" id=\"login_user\"><br>Password: <input type=\"password\" id=\"login_pass\"><br>");
         $("#login_div").append(" <button id=\"login_btn\"><span>Login</span></button>");
@@ -307,7 +307,7 @@ $(document).ready(function () {
                                                         row.append("<td>"+airline_name+"</td>");
                                                         row.append("<td>"+flight_number+"</td>");
                                                         row.append("<td>" + source + "</td>");
-                                                        row.append('<span style="font-size: 30px; color: #404040;"><i class="fas fa-arrow-right"></i></span>');
+                                                        row.append('<span style="font-size: 30px; color: #1a1a1a;"><i class="fas fa-arrow-right"></i></span>');
                                                         row.append("<td>" + destination + "</td>");
                                                        
                                             

@@ -1,5 +1,8 @@
 body {
-    background-color: #efa02f;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-size: 1500px 800px;
+    overflow: scroll;
     text-align: center;
     font-family: 'Gamja Flower', cursive;
     font-weight: bold;
@@ -40,10 +43,10 @@ input[type="date"], focus {
 
 #login_btn {
     display: inline-block;
-    background-color: #666666;
+    background-color: #4d4d4d;
     color: #d9d9d9;
     border-radius: 10px;
-    border-color: #666666;
+    border-color: #4d4d4d;
     border-width: 1px;
     text-align: center;
     font-size: 45px;
@@ -83,7 +86,7 @@ input[type="date"], focus {
 
 .flight_regis_header, #next_fantastic, #my_ticket, #new_user_header, #change_password_header, #enter_info_header, .your_ticket {
     font-size: 70px;
-    color: #404040;
+    color: #1a1a1a;
 }
 
 #ticket_result {
@@ -93,18 +96,18 @@ input[type="date"], focus {
 
 #ticket_result td {
     font-size: 30px;
-    color: #404040;
+    color: #1a1a1a;
     width: 200px;
 }
 
 #result td {
     font-size: 30px;
-    color: #404040;
+    color: #1a1a1a;
     width: 200px;
 }
 
 #myTicketTable {
-    color: #404040;
+    color: #1a1a1a;
     font-size: 30px;
 }
 
@@ -118,7 +121,7 @@ input[type="date"], focus {
 
 input {
     font-size: 20px;
-    color: #404040;
+    color: #1a1a1a;
     margin: 30px;
     padding: 15px;
 }
@@ -142,7 +145,7 @@ html, body {
 #gender_in_confirm, #email_in_confirm{
     text-align: left;
     font-size: 35px;
-    color: #404040;
+    color: #1a1a1a;
     font-weight: bold;
 }
 
@@ -184,7 +187,7 @@ input[type=text]:focus {
 
 #register, #change_pass {
     font-size: 40px;
-    color: #404040;
+    color: #1a1a1a;
     font-weight: bold;
     display:inline-block;
     margin-top: 10px;
@@ -198,10 +201,10 @@ input[type=text]:focus {
 #logoutBtn, #tickets_btn, #search_btn, #ticketback, #register_btn, 
 #change_btn, #change_back, #select_btn, #confirm_btn, #confirm_back, .cancel, #info_back{
     display: inline-block;
-    background-color: #666666;
+    background-color: #4d4d4d;
     color: #d9d9d9;
     border-radius: 10px;
-    border-color: #666666;
+    border-color: #4d4d4d;
     border-width: 1px;
     text-align: center;
     font-size: 23px;
