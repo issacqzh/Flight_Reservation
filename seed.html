@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+        <script src="http://www.cs.unc.edu/~kmp/comp426fall18/jquery-3.3.1.js"></script>
+</head>
+<bdoy>
+<script>
+
+
+var number=["A","B","C","D","E","F"];
+for(k=18123;k<18129;k++){
+for(j=1;j<31;j++){
+for(i=0;i<number.length;i++){
+    $.ajax("http://comp426.cs.unc.edu:3001/seats",{
+        
+            type: 'POST',
+            xhrFields: {
+                withCredentials: true
+            },
+            data: {
+                "seat": {
+                    "plane_id":  k,
+                 "row":       j,
+                "number":    number[i],
+               
+  }
+            },
+          
+            async:false,
+            success: function () {
+           
+            
+            },
+            error: function () {
+            
+            }
+        });
+}
+}}
+    
+    </script>
+
+</bdoy>
+</html>
+
+POST to /seats with parameters:
+{
+  "seat": {
+    "plane_id":  2,
+    "row":       21,
+    "number":    "A",
+    "cabin":     "economy",
+    "is_window": true
+  }
+}

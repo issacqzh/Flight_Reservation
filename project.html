@@ -81,16 +81,66 @@ window.fbAsyncInit = function() {
     }
 </script>
 
-<!-- google maps api -->
+<!-- google api -->
 
-
+  
     <script>
       // This example adds an animated symbol to a polyline.
 
       function initMap() {
         console.log("success");
+        let source = $("#source").val();
+        let destination = $("#destination").val();
+        let source_latitude=0;
+        let source_longitude=0;
+        let destination_latitude=0;
+        let destination_longitude=0;
+        $.ajax("http://comp426.cs.unc.edu:3001/airports",{
+          type: 'GET',
+            xhrFields: {
+                withCredentials: true
+            },
+            async:false,
+            success: function (response) {
+                for(t=0;t<response.length;t++){
+                  if(response[t].city==source){
+                    source_latitude=parseFloat(response[t].latitude);
+                    console.log(source_latitude);
+                    source_longitude=parseFloat(response[t].longitude);
+                    console.log(source_latitude);
+                  }
+                }
+            },
+            error: function () {
+                alert('fail');
+            }
+        });
+        $.ajax("http://comp426.cs.unc.edu:3001/airports",{
+          type: 'GET',
+            xhrFields: {
+                withCredentials: true
+            },
+            async:false,
+            success: function (response) {
+                for(t=0;t<response.length;t++){
+                  if(response[t].city==destination){
+                    destination_latitude=parseFloat(response[t].latitude);
+                    console.log(destination_latitude);
+                    destination_longitude=parseFloat(response[t].longitude);
+                    console.log(destination_longitude);
+                  }
+                }
+            },
+            error: function () {
+                alert('fail');
+            }
+        });
+        var middle_latitude=(source_latitude+destination_latitude)/2;
+        console.log(middle_latitude);
+        var middle_longitude=(source_longitude+destination_longitude)/2;
+        console.log(middle_longitude);
         var map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: 20.291, lng: 153.027},
+          center: {lat: middle_latitude, lng: middle_longitude},
           zoom: 6,
           mapTypeId: 'terrain'
         });
@@ -105,7 +155,7 @@ window.fbAsyncInit = function() {
 
         // Create the polyline and add the symbol to it via the 'icons' property.
         var line = new google.maps.Polyline({
-          path: [{lat: 22.291, lng: 153.027}, {lat: 18.291, lng: 153.027}],
+          path: [{lat: source_latitude, lng: source_longitude}, {lat: destination_latitude, lng: destination_longitude}],
           icons: [{
             icon: lineSymbol,
             offset: '100%'
@@ -114,6 +164,7 @@ window.fbAsyncInit = function() {
         });
 
         animateCircle(line);
+        
       }
 
       // Use the DOM setInterval() function to change the offset of the symbol
@@ -132,7 +183,15 @@ window.fbAsyncInit = function() {
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDQIjxKPQ80l2uJ3kBcIGdGlmMfXRfHiZI&callback=initMap">
     </script>
-  
+ 
+
+
+
+
+
+
+
+
 
   <!-- <script src="autocomplete.js"></script> -->
   <link rel="stylesheet" type="text/css" href="style.css">

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+        <script src="http://www.cs.unc.edu/~kmp/comp426fall18/jquery-3.3.1.js"></script>
+        <script>    
+
+                for(i=433109;i<434138;i++){
+                    $.ajax("http://comp426.cs.unc.edu:3001/seats/"+i,{
+                        
+                        type: 'DELETE',
+                        xhrFields: {
+                            withCredentials: true
+                        },
+                      
+                      
+                        async:false,
+                        success: function () {
+                       console.log("sa");
+                        
+                        },
+                        error: function () {
+                        
+                        }
+                    });}
+                    </script>
+                
+</head>
+<body>
+    <div>ss</div>
+
+</body>
+</html>
